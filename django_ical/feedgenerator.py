@@ -46,7 +46,10 @@ class ICal20Feed(SyndicationFeed):
 
         self.write_items(cal)
 
-        outfile.write(cal.as_string()) 
+        to_ical = getattr(cal, 'as_string', None)
+        if not to_ical:
+            to_ical = cal.to_ical
+        outfile.write(to_ical())
 
     def write_items(self, calendar):
         """
