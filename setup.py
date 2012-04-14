@@ -23,5 +23,5 @@ setup (
         'icalendar>=2.0.1',
     ],
     packages=find_packages(),
-    #test_suite='tests.main',
+    test_suite='tests.main',
 )
