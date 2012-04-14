@@ -4,12 +4,15 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-# ICAL用の Django Syndication フレームワークに拡張するフィールド
+# Extra fields added to the Feed object
+# to support ical
 FEED_EXTRA_FIELDS = (
     'method',
     'product_id',
     'timezone',
 )
+# Extra fields added to items (events) to 
+# support ical
 ICAL_EXTRA_FIELDS = (
     'timestamp',        # dtstamp
     'created',          # created
@@ -23,11 +26,11 @@ ICAL_EXTRA_FIELDS = (
 class ICalFeed(Feed):
     """
     ====================
-    icalendar 用のFeed
+    icalendar Feed
     ====================
 
-    既存フィールド
-    ---------------------
+    Existing Django syndication feeds 
+    ------------------------------------
     title => X-WR-CALNAME
     description => X-WR-CALDESC
 
@@ -36,7 +39,7 @@ class ICalFeed(Feed):
     item_description => DESCRIPTION
     item_link => URL
      
-    拡張フィールド
+    Extension fields
     -------------------------
     method => METHOD
     timezone => X-WR-TIMEZONE
@@ -51,7 +54,7 @@ class ICalFeed(Feed):
     """
     def _get_dynamic_attr(self, attname, obj, default=None):
         """
-        django.contrib.syndication.views.Feed からコピー
+        Copied from django.contrib.syndication.views.Feed
         """
         try:
             attr = getattr(self, attname)
@@ -71,6 +74,10 @@ class ICalFeed(Feed):
             else:
                 return attr()
         return attr
+    
+    # Not used by icalendar but required
+    # by the Django syndication framework.
+    link = ''
 
     def method(self, obj):
         return 'PUBLISH'
