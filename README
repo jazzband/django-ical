@@ -41,7 +41,7 @@ iCalendar calendar. Calendars contain items which are events.
 Let's look at a simple example. Here the item_start_datetime is a django-ical
 extension that supplies the start time of the event.
 
-.. code-block:: python
+::
 
     from django_ical.views import ICalFeed
     from examplecom.models import Event
@@ -68,7 +68,7 @@ extension that supplies the start time of the event.
 To connect a URL to this calendar, put an instance of the EventFeed object in
 your URLconf. For example:
 
-.. code-block:: python
+::
 
     from django.conf.urls import patterns, url, include
     from myproject.feeds import EventFeed
