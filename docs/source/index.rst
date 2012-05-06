@@ -18,6 +18,14 @@ able to be able to use django-ical fairly quickly. It works the same way as
 the Django syndication framework but adds a few extension properties to
 support iCalendar feeds.
 
+django-ical uses the `icalendar <http://pypi.python.org/pypi/icalendar/>`_ library
+under the hood to generate iCalendar feeds.
+
+Requirements:
+
+* `Django <http://www.djangoproject.com/>`_ >= 1.3
+* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 2.0.1
+
 Contents:
 
 .. toctree::
