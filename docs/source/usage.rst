@@ -13,7 +13,7 @@ With RSS feeds, the items in the feed represent articles or simple web pages.
 The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
 iCalendar calendar. Calendars contain items which are events.
 
-Let's look at a simple example. Here the item_startdatetime is a django-ical
+Let's look at a simple example. Here the item_start_datetime is a django-ical
 extension that supplies the start time of the event.
 
 .. code-block:: python
@@ -29,7 +29,7 @@ extension that supplies the start time of the event.
         timezone = 'UTC'
 
         def items(self):
-            return Example.objects.all().order_by('-start_datetime')
+            return Event.objects.all().order_by('-start_datetime')
 
         def item_title(self, item):
             return item.title
