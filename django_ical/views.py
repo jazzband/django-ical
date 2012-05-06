@@ -1,8 +1,18 @@
 #:coding=utf-8:
 
+"""
+Views for generating ical feeds.
+"""
+
 from datetime import datetime
 
 from django.contrib.syndication.views import Feed
+
+from django_ical import feedgenerator
+
+__all__ = (
+    'ICalFeed',
+)
 
 # Extra fields added to the Feed object
 # to support ical
@@ -16,7 +26,7 @@ FEED_EXTRA_FIELDS = (
 ICAL_EXTRA_FIELDS = (
     'timestamp',        # dtstamp
     'created',          # created
-    'updated',          # last-modified
+    'modified',         # last-modified
     'start_datetime',   # dtstart
     'end_datetime',     # dtend
     'transparency',     # transp
@@ -25,12 +35,10 @@ ICAL_EXTRA_FIELDS = (
 
 class ICalFeed(Feed):
     """
-    ====================
-    icalendar Feed
-    ====================
+    iCalendar Feed
 
     Existing Django syndication feeds 
-    ------------------------------------
+
     title => X-WR-CALNAME
     description => X-WR-CALDESC
 
@@ -40,18 +48,20 @@ class ICalFeed(Feed):
     item_link => URL
      
     Extension fields
-    -------------------------
+
     method => METHOD
     timezone => X-WR-TIMEZONE
 
     item_class => CLASS
     item_timestamp => DTSTAMP
     item_created => CREATED
-    item_updated => LAST-MODIFIED
+    item_modified => LAST-MODIFIED
     item_start_datetime => DTSTART
     item_end_datetime => DTEND
     item_transparency => TRANSP
     """
+    feed_type = feedgenerator.DefaultFeed
+
     def _get_dynamic_attr(self, attname, obj, default=None):
         """
         Copied from django.contrib.syndication.views.Feed
