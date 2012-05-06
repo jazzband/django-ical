@@ -19,7 +19,7 @@ setup (
       'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires = [
-        'Django>=1.3',
+        'Django>=1.1',
         'icalendar>=2.0.1',
     ],
     packages=find_packages(),
