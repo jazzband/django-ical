@@ -9,6 +9,7 @@ setup (
     author='Ian Lewis',
     author_email='IanMLewis@gmail.com',
     license='MIT License',
+    url='https://bitbucket.org/IanLewis/django-ical',
     classifiers=[
       'Development Status :: 3 - Alpha',
       'Environment :: Plugins',
