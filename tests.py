@@ -13,6 +13,8 @@ def main():
     os.environ["DJANGO_SETTINGS_MODULE"] = "django.conf.global_settings"
     from django.conf import global_settings
 
+    global_settings.SECRET_KEY = 'snakeoil'
+
     global_settings.INSTALLED_APPS = (
         'django.contrib.contenttypes',
         APP_MODULE,
