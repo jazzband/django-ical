@@ -1,5 +1,6 @@
 #:coding=utf-8:
 
+import pytz
 import icalendar
 from datetime import datetime
 
@@ -75,3 +76,59 @@ class ICal20FeedTest(TestCase):
         self.assertTrue(calendar.subcomponents[1]['URL'].endswith('/event/2'))
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
+
+    def test_wr_timezone(self):
+        """
+        Test for the x-wr-timezone property.
+        """
+        class TestTimezoneFeed(TestICalFeed):
+            timezone = "Asia/Tokyo"
+
+        request = RequestFactory().get("/test/ical")
+        view = TestTimezoneFeed()
+
+        response = view(request)
+        calendar = icalendar.Calendar.from_ical(response.content)
+        self.assertEquals(calendar['X-WR-TIMEZONE'], "Asia/Tokyo")
+
+
+    def test_timezone(self):
+        tokyo = pytz.timezone('Asia/Tokyo')
+        us_eastern = pytz.timezone('US/Eastern')
+
+        class TestTimezoneFeed(TestItemsFeed):
+            def items(self):
+                return [{
+                    'title': 'Title1',
+                    'description': 'Description1',
+                    'link': '/event/1',
+                    'start': datetime(2012, 5, 1, 18, 00, tzinfo=tokyo),
+                    'end': datetime(2012, 5, 1, 20, 00, tzinfo=tokyo),
+
+                }, {
+                    'title': 'Title2',
+                    'description': 'Description2',
+                    'link': '/event/2',
+                    'start': datetime(2012, 5, 6, 18, 00, tzinfo=us_eastern),
+                    'end': datetime(2012, 5, 6, 20, 00, tzinfo=us_eastern),
+                }]
+
+        request = RequestFactory().get("/test/ical")
+        view = TestTimezoneFeed()
+
+        response = view(request)
+        calendar = icalendar.Calendar.from_ical(response.content)
+        self.assertEquals(len(calendar.subcomponents), 2)
+
+        self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), '20120501T180000')
+        self.assertEquals(calendar.subcomponents[0]['DTSTART'].params['TZID'], 'Asia/Tokyo')
+
+        self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), '20120501T200000')
+        self.assertEquals(calendar.subcomponents[0]['DTEND'].params['TZID'], 'Asia/Tokyo')
+
+
+        self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
+        self.assertEquals(calendar.subcomponents[1]['DTSTART'].params['TZID'], 'US/Eastern')
+
+        self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
+        self.assertEquals(calendar.subcomponents[1]['DTEND'].params['TZID'], 'US/Eastern')
