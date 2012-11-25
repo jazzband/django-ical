@@ -5,6 +5,7 @@ CHANGES
 ------
 
 - Removed support for Django 1.2. It should still work, but it's not supported. 
+- We now require icalendar 3.1.
 
 1.1
 ------
