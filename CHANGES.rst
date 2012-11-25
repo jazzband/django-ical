@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+1.2
+------
+
+- Removed support for Django 1.2. It should still work, but it's not supported. 
+
 1.1
 ------
 
