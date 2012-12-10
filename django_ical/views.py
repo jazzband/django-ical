@@ -8,7 +8,7 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-import feedgenerator
+from django_ical import feedgenerator
 
 __all__ = (
     'ICalFeed',
