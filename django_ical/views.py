@@ -8,7 +8,7 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-from django_ical import feedgenerator
+import feedgenerator
 
 __all__ = (
     'ICalFeed',
@@ -31,6 +31,7 @@ ICAL_EXTRA_FIELDS = (
     'end_datetime',     # dtend
     'transparency',     # transp
     'location',         # location
+    'geolocation'
 )
 
 class ICalFeed(Feed):
