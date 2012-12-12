@@ -31,7 +31,7 @@ ICAL_EXTRA_FIELDS = (
     'end_datetime',     # dtend
     'transparency',     # transp
     'location',         # location
-    'geolocation'
+    'geolocation'       # latitude;longitude
 )
 
 class ICalFeed(Feed):
