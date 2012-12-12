@@ -105,11 +105,11 @@ Here is a table of all of the fields that django-ical supports.
 | item_geolocation      | `GEO`_                | The latitude and longitude  |
 |                       |                       | of the event. The value     |
 |                       |                       | returned by this property   |
-|                       |                       | should be a string          |
+|                       |                       | should be a two-tuple       |
 |                       |                       | containing the latitude and |
-|                       |                       | longitude seperated by a    |
+|                       |                       | longitude as float values.  |
 |                       |                       | semicolon. Ex:              |
-|                       |                       | *"37.386013;-122.082932"*   |
+|                       |                       | *(37.386013, -122.082932)*  |
 +-----------------------+-----------------------+-----------------------------+
 | item_transparency     | `TRANSP`_             | The event transparency.     |
 |                       |                       | Defines whether the event   |
