@@ -26,5 +26,5 @@ http://django-ics.readthedocs.org/en/latest/
 Requirements
 ===================
 
-* `Django <http://www.djangoproject.com/>`_ >= 1.2
-* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 2.0.1
+* `Django <http://www.djangoproject.com/>`_ >= 1.3.4
+* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 3.1
