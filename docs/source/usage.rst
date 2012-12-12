@@ -65,44 +65,53 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 | Property name         | iCalendar field name  | Description                 |
 +=======================+=======================+=============================+
-| product_id            | PRODID                | The calendar product ID     |
+| product_id            | `PRODID`_             | The calendar product ID     |
 +-----------------------+-----------------------+-----------------------------+
-| timezone              | X-WR-TIMEZONE         | The calendar timezone       |
+| timezone              | `X-WR-TIMEZONE`_      | The calendar timezone       |
 +-----------------------+-----------------------+-----------------------------+
-| title                 | X-WR-CALNAME          | The calendar name/title     |
+| title                 | `X-WR-CALNAME`_       | The calendar name/title     |
 +-----------------------+-----------------------+-----------------------------+
-| description           | X-WR-CALDESC          | The calendar name/title     |
+| description           | `X-WR-CALDESC`_       | The calendar name/title     |
 +-----------------------+-----------------------+-----------------------------+
-| method                | METHOD                | The calendar method such as |
+| method                | `METHOD`_             | The calendar method such as |
 |                       |                       | meeting requests.           |
 +-----------------------+-----------------------+-----------------------------+
-| item_guid             | UID                   | The event's unique id.      |
+| item_guid             | `UID`_                | The event's unique id.      |
 |                       |                       | This id should be           |
 |                       |                       | *globally* unique so you    |
 |                       |                       | should add an               | 
 |                       |                       | @<domain_name> to your id.  |
 +-----------------------+-----------------------+-----------------------------+
-| item_title            | SUMMARY               | The event name/title        |
+| item_title            | `SUMMARY`_            | The event name/title        |
 +-----------------------+-----------------------+-----------------------------+
-| item_description      | DESCRIPTION           | The event description       |
+| item_description      | `DESCRIPTION`_        | The event description       |
 +-----------------------+-----------------------+-----------------------------+
-| item_link             | URL                   | The event url               |
+| item_link             | `URL`_                | The event url               |
 +-----------------------+-----------------------+-----------------------------+
-| item_class            | CLASS                 | The event class             |
+| item_class            | `CLASS`_              | The event class             |
 |                       |                       | (e.g. PUBLIC, PRIVATE,      |
 |                       |                       | CONFIDENTIAL)               |
 +-----------------------+-----------------------+-----------------------------+
-| item_created          | CREATED               | The event create time       |
+| item_created          | `CREATED`_            | The event create time       |
 +-----------------------+-----------------------+-----------------------------+
-| item_modified         | CREATED               | The event modified time     |
+| item_modified         | `CREATED`_            | The event modified time     |
 +-----------------------+-----------------------+-----------------------------+
-| item_start_datetime   | DTSTART               | The event start time        |
+| item_start_datetime   | `DTSTART`_            | The event start time        |
 +-----------------------+-----------------------+-----------------------------+
-| item_end_datetime     | DTEND                 | The event end time          |
+| item_end_datetime     | `DTEND`_              | The event end time          |
 +-----------------------+-----------------------+-----------------------------+
-| item_location         | LOCATION              | The event lociation         |
+| item_location         | `LOCATION`_           | The event lociation         |
 +-----------------------+-----------------------+-----------------------------+
-| item_transparency     | TRANSP                | The event transparency.     |
+| item_geolocation      | `GEO`_                | The latitude and longitude  |
+|                       |                       | of the event. The value     |
+|                       |                       | returned by this property   |
+|                       |                       | should be a string          |
+|                       |                       | containing the latitude and |
+|                       |                       | longitude seperated by a    |
+|                       |                       | semicolon. Ex:              |
+|                       |                       | *"37.386013;-122.082932"*   |
++-----------------------+-----------------------+-----------------------------+
+| item_transparency     | `TRANSP`_             | The event transparency.     |
 |                       |                       | Defines whether the event   |
 |                       |                       | shows up in busy searches.  |
 |                       |                       | (e.g. OPAQUE, TRANSPARENT)  |
@@ -125,3 +134,20 @@ also create custom feed generator subclasses for use with the feed_type
 option.
 
 See: `The syndication feed framework: Specifying the type of feed <https://docs.djangoproject.com/en/1.4/ref/contrib/syndication/#specifying-the-type-of-feed>`_
+
+.. _PRODID: http://www.kanzaki.com/docs/ical/prodid.html
+.. _METHOD: http://www.kanzaki.com/docs/ical/method.html
+.. _SUMMARY: http://www.kanzaki.com/docs/ical/summary.html
+.. _DESCRIPTION: http://www.kanzaki.com/docs/ical/description.html
+.. _UID: http://www.kanzaki.com/docs/ical/uid.html
+.. _CLASS: http://www.kanzaki.com/docs/ical/class.html
+.. _CREATED: http://www.kanzaki.com/docs/ical/created.html
+.. _DTSTART: http://www.kanzaki.com/docs/ical/dtstart.html
+.. _DTEND: http://www.kanzaki.com/docs/ical/dtend.html
+.. _GEO: http://www.kanzaki.com/docs/ical/geo.html
+.. _LOCATION: http://www.kanzaki.com/docs/ical/location.html
+.. _TRANSP: http://www.kanzaki.com/docs/ical/transp.html
+.. _URL: http://www.kanzaki.com/docs/ical/url.html
+.. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
+.. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
+.. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
