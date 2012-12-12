@@ -27,13 +27,14 @@ class TestItemsFeed(ICalFeed):
             'link': '/event/1',
             'start': datetime(2012, 5, 1, 18, 00),
             'end': datetime(2012, 5, 1, 20, 00),
-
+            'geolocation': (37.386013, -122.082932),
         }, {
             'title': 'Title2',
             'description': 'Description2',
             'link': '/event/2',
             'start': datetime(2012, 5, 6, 18, 00),
             'end': datetime(2012, 5, 6, 20, 00),
+            'geolocation': (37.386013, -122.082932),
         }]
 
     def item_title(self, obj):
@@ -46,6 +47,8 @@ class TestItemsFeed(ICalFeed):
         return obj['end']
     def item_link(self, obj):
         return obj['link']
+    def item_geolocation(self, obj):
+        return obj.get('geolocation', None)
 
 class ICal20FeedTest(TestCase):
     def test_basic(self):
@@ -70,12 +73,14 @@ class ICal20FeedTest(TestCase):
         self.assertTrue(calendar.subcomponents[0]['URL'].endswith('/event/1'))
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), '20120501T180000')
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), '20120501T200000')
+        self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
 
         self.assertEquals(calendar.subcomponents[1]['SUMMARY'], 'Title2')
         self.assertEquals(calendar.subcomponents[1]['DESCRIPTION'], 'Description2')
         self.assertTrue(calendar.subcomponents[1]['URL'].endswith('/event/2'))
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
+        self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
 
     def test_wr_timezone(self):
         """
