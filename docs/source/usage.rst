@@ -94,7 +94,7 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 | item_created          | `CREATED`_            | The event create time       |
 +-----------------------+-----------------------+-----------------------------+
-| item_modified         | `CREATED`_            | The event modified time     |
+| item_updated          | `LAST-MODIFIED`_      | The event modified time     |
 +-----------------------+-----------------------+-----------------------------+
 | item_start_datetime   | `DTSTART`_            | The event start time        |
 +-----------------------+-----------------------+-----------------------------+
@@ -142,6 +142,7 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _UID: http://www.kanzaki.com/docs/ical/uid.html
 .. _CLASS: http://www.kanzaki.com/docs/ical/class.html
 .. _CREATED: http://www.kanzaki.com/docs/ical/created.html
+.. _LAST-MODIFIED: http://www.kanzaki.com/docs/ical/lastModified.html
 .. _DTSTART: http://www.kanzaki.com/docs/ical/dtstart.html
 .. _DTEND: http://www.kanzaki.com/docs/ical/dtend.html
 .. _GEO: http://www.kanzaki.com/docs/ical/geo.html
