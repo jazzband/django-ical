@@ -116,6 +116,13 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | shows up in busy searches.  |
 |                       |                       | (e.g. OPAQUE, TRANSPARENT)  |
 +-----------------------+-----------------------+-----------------------------+
+| item_organizer        | `ORGANIZER`_          | The event organizer.        |
+|                       |                       | Expected to be a            |
+|                       |                       | vCalAddress object. See     |
+|                       |                       | `iCalendar`_ documentation  |
+|                       |                       | or tests to know how to     |
+|                       |                       | build them.                 |
++-----------------------+-----------------------+-----------------------------+
 
 Note:
 
@@ -149,6 +156,8 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _LOCATION: http://www.kanzaki.com/docs/ical/location.html
 .. _TRANSP: http://www.kanzaki.com/docs/ical/transp.html
 .. _URL: http://www.kanzaki.com/docs/ical/url.html
+.. _ORGANIZER: http://www.kanzaki.com/docs/ical/organizer.html
 .. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
+.. _iCalendar: http://icalendar.readthedocs.org/en/latest/index.html

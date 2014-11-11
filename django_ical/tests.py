@@ -28,6 +28,7 @@ class TestItemsFeed(ICalFeed):
             'start': datetime(2012, 5, 1, 18, 00),
             'end': datetime(2012, 5, 1, 20, 00),
             'geolocation': (37.386013, -122.082932),
+            'organizer': 'john.doe@example.com',
         }, {
             'title': 'Title2',
             'description': 'Description2',
@@ -35,6 +36,12 @@ class TestItemsFeed(ICalFeed):
             'start': datetime(2012, 5, 6, 18, 00),
             'end': datetime(2012, 5, 6, 20, 00),
             'geolocation': (37.386013, -122.082932),
+            'organizer':
+                {
+                    'cn': 'John Doe',
+                    'email': 'john.doe@example.com',
+                    'role': 'CHAIR'
+                },
         }]
 
     def item_title(self, obj):
@@ -49,6 +56,17 @@ class TestItemsFeed(ICalFeed):
         return obj['link']
     def item_geolocation(self, obj):
         return obj.get('geolocation', None)
+    def item_organizer(self, obj):
+        organizer_dic = obj.get('organizer', None)
+        if organizer_dic:
+            if isinstance(organizer_dic, dict):
+                organizer = icalendar.vCalAddress('MAILTO:{}'.format(organizer_dic['email']))
+                for key, val in organizer_dic.iteritems():
+                    if key is not 'email':
+                        organizer.params[key] = icalendar.vText(val)
+            else:
+                organizer = icalendar.vCalAddress('MAILTO:{}'.format(organizer_dic))
+            return organizer
 
 class ICal20FeedTest(TestCase):
     def test_basic(self):
@@ -74,6 +92,7 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), '20120501T180000')
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), '20120501T200000')
         self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
+        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), "MAILTO:john.doe@example.com")
 
         self.assertEquals(calendar.subcomponents[1]['SUMMARY'], 'Title2')
         self.assertEquals(calendar.subcomponents[1]['DESCRIPTION'], 'Description2')
@@ -81,6 +100,7 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
         self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
+        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), "MAILTO:john.doe@example.com")
 
     def test_wr_timezone(self):
         """
