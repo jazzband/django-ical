@@ -81,8 +81,11 @@ class ICal20FeedTest(TestCase):
     def test_items(self):
         request = RequestFactory().get("/test/ical")
         view = TestItemsFeed()
-        
+
         response = view(request)
+        self.assertIn('Content-Disposition', response)
+        self.assertEqual(response['content-disposition'], 'attachment; filename="calendar.ics"')
+
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(len(calendar.subcomponents), 2)
 

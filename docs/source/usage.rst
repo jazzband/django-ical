@@ -14,7 +14,9 @@ The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
 iCalendar calendar. Calendars contain items which are events.
 
 Let's look at a simple example. Here the item_start_datetime is a django-ical
-extension that supplies the start time of the event.
+extension that supplies the start time of the event. The `file_name` attribute
+is used as base name when generating the file. In the example below, it will be
+called "Calendar for my events.ics".
 
 .. code-block:: python
 
@@ -27,6 +29,7 @@ extension that supplies the start time of the event.
         """
         product_id = '-//example.com//Example//EN'
         timezone = 'UTC'
+        file_name = "Calendar for my events"
 
         def items(self):
             return Event.objects.all().order_by('-start_datetime')
