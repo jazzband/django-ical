@@ -63,6 +63,17 @@ class ICalFeed(Feed):
     item_transparency => TRANSP
     """
     feed_type = feedgenerator.DefaultFeed
+    file_name = "calendar"
+
+    def __call__(self, request, *args, **kwargs):
+        """
+        Extends the behaviour of Django's parent class to
+        set the filename
+        """
+        response = super(ICalFeed, self).__call__(request, *args, **kwargs)
+        filename = "{}.ics".format(self.file_name)
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+        return response
 
     def _get_dynamic_attr(self, attname, obj, default=None):
         """
