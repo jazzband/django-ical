@@ -1,12 +1,19 @@
 CHANGES
 =======
 
+1.3
+------
+
+- Django up to 1.7 is supported.
+- Added a new `file_name` parameter. *Thanks, browniebroke*
+- Added support for the `ORGANIZER` field. *Thanks, browniebroke*
+
 1.2
 ------
 
 - Removed support for Django 1.2. It should still work, but it's not supported. 
 - We now require icalendar 3.1.
-- Added support for the GEO field. *Thanks, null_radix!*
+- Added support for the `GEO` field. *Thanks, null_radix!*
 
 1.1
 ------
