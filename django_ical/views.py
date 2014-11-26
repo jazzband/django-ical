@@ -46,26 +46,24 @@ class ICalFeed(Feed):
 
     Existing Django syndication feeds
 
-    title => X-WR-CALNAME
-    description => X-WR-CALDESC
-
-    item_guid => UID
-    item_title => SUMMARY
-    item_description => DESCRIPTION
-    item_link => URL
+    :title: X-WR-CALNAME
+    :description: X-WR-CALDESC
+    :item_guid: UID
+    :item_title: SUMMARY
+    :item_description: DESCRIPTION
+    :item_link: URL
 
     Extension fields
 
-    method => METHOD
-    timezone => X-WR-TIMEZONE
-
-    item_class => CLASS
-    item_timestamp => DTSTAMP
-    item_created => CREATED
-    item_modified => LAST-MODIFIED
-    item_start_datetime => DTSTART
-    item_end_datetime => DTEND
-    item_transparency => TRANSP
+    :method: METHOD
+    :timezone: X-WR-TIMEZONE
+    :item_class: CLASS
+    :item_timestamp: DTSTAMP
+    :item_created: CREATED
+    :item_modified: LAST-MODIFIED
+    :item_start_datetime: DTSTART
+    :item_end_datetime: DTEND
+    :item_transparency: TRANSP
     """
     feed_type = feedgenerator.DefaultFeed
 

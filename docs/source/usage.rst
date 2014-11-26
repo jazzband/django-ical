@@ -7,16 +7,14 @@ Overview
 The high level ical feed-generating is supplied by the :class:`ICalFeed
 <django_ical.views.ICalFeed>` class.  To create a feed, write a
 :class:`ICalFeed <django_ical.views.ICalFeed>` class and point to an instance
-of it in your `URLconf <https://docs.djangoproject.com/en/1.4/topics/http/urls/>`_.
+of it in your `URLconf <https://docs.djangoproject.com/en/1.7/topics/http/urls/>`_.
 
 With RSS feeds, the items in the feed represent articles or simple web pages.
 The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
 iCalendar calendar. Calendars contain items which are events.
 
 Let's look at a simple example. Here the item_start_datetime is a django-ical
-extension that supplies the start time of the event. The `file_name` attribute
-is used as base name when generating the file. In the example below, it will be
-called "Calendar for my events.ics".
+extension that supplies the start time of the event.
 
 .. code-block:: python
 
@@ -29,7 +27,7 @@ called "Calendar for my events.ics".
         """
         product_id = '-//example.com//Example//EN'
         timezone = 'UTC'
-        file_name = "Calendar for my events"
+        file_name = "event.ics"
 
         def items(self):
             return Event.objects.all().order_by('-start_datetime')
@@ -53,10 +51,46 @@ your URLconf. For example:
 
     urlpatterns = patterns('',
         # ...
-        (r'^latest/feed/$', EventFeed()),
+        (r'^latest/feed.ics$', EventFeed()),
         # ...
     )
 
+File Downloads
+------------------
+
+The `file_name` parameter is an optional used as base name when generating the file. By
+default django_ics will not set the Content-Disposition header of the response. By setting
+the file_name parameter you can cause django_ical to set the Content-Disposition header
+and set the file name. In the example below, it will be called "event.ics".
+
+.. code-block:: python
+
+    class EventFeed(ICalFeed):
+        """
+        A simple event calender
+        """
+        product_id = '-//example.com//Example//EN'
+        timezone = 'UTC'
+        file_name = "event.ics"
+
+        # ...
+
+The `file_name` parameter can be a method like other properties. Here we can set
+the file name to include the id of the object returned by `get_object()`.
+
+.. code-block:: python
+
+    class EventFeed(ICalFeed):
+        """
+        A simple event calender
+        """
+        product_id = '-//example.com//Example//EN'
+        timezone = 'UTC'
+
+        def file_name(self, obj):
+            return "feed_%s.ics" % obj.id
+
+        # ...
 
 Property Reference and Extensions
 --------------------------------------
@@ -143,7 +177,7 @@ You use this framework on your own, for lower-level feed generation. You can
 also create custom feed generator subclasses for use with the feed_type
 option.
 
-See: `The syndication feed framework: Specifying the type of feed <https://docs.djangoproject.com/en/1.4/ref/contrib/syndication/#specifying-the-type-of-feed>`_
+See: `The syndication feed framework: Specifying the type of feed <https://docs.djangoproject.com/en/1.7/ref/contrib/syndication/#specifying-the-type-of-feed>`_
 
 .. _PRODID: http://www.kanzaki.com/docs/ical/prodid.html
 .. _METHOD: http://www.kanzaki.com/docs/ical/method.html
