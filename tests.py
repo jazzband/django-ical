@@ -2,7 +2,6 @@ import os
 import sys
 import django
 
-APP_MODULE = 'django_ical'
 
 def main():
     """
@@ -17,7 +16,7 @@ def main():
 
     global_settings.INSTALLED_APPS = (
         'django.contrib.contenttypes',
-        APP_MODULE,
+        'django_ical',
     )
     global_settings.DATABASES = {
         'default': {
@@ -31,14 +30,14 @@ def main():
         'django.contrib.sessions.middleware.SessionMiddleware',
     )
 
+    if django.VERSION > (1, 7):
+        django.setup()
+
     from django.test.utils import get_runner
     test_runner = get_runner(global_settings)
 
-    if django.VERSION > (1,2):
-        test_runner = test_runner()
-        failures = test_runner.run_tests([APP_MODULE])
-    else:
-        failures = test_runner([APP_MODULE], verbosity=1)
+    test_runner = test_runner()
+    failures = test_runner.run_tests(['django_ical'])
     sys.exit(failures)
 
 if __name__ == '__main__':
