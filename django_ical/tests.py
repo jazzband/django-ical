@@ -39,12 +39,11 @@ class TestItemsFeed(ICalFeed):
             'start': datetime(2012, 5, 6, 18, 00),
             'end': datetime(2012, 5, 6, 20, 00),
             'geolocation': (37.386013, -122.082932),
-            'organizer':
-                {
-                    'cn': 'John Doe',
-                    'email': 'john.doe@example.com',
-                    'role': 'CHAIR'
-                },
+            'organizer': {
+                'cn': 'John Doe',
+                'email': 'john.doe@example.com',
+                'role': 'CHAIR'
+            },
         }]
 
     def item_title(self, obj):
@@ -64,17 +63,38 @@ class TestItemsFeed(ICalFeed):
 
     def item_geolocation(self, obj):
         return obj.get('geolocation', None)
+
     def item_organizer(self, obj):
         organizer_dic = obj.get('organizer', None)
         if organizer_dic:
             if isinstance(organizer_dic, dict):
-                organizer = icalendar.vCalAddress('MAILTO:{}'.format(organizer_dic['email']))
+                organizer = icalendar.vCalAddress('MAILTO:%s' % organizer_dic['email'])
                 for key, val in organizer_dic.iteritems():
                     if key is not 'email':
                         organizer.params[key] = icalendar.vText(val)
             else:
-                organizer = icalendar.vCalAddress('MAILTO:{}'.format(organizer_dic))
+                organizer = icalendar.vCalAddress('MAILTO:%s' % organizer_dic)
             return organizer
+
+
+class TestFilenameFeed(ICalFeed):
+    feed_type = ICal20Feed
+    title = "Test Filename Feed"
+    description = "Test ICal Feed"
+
+    def get_object(self, request):
+        return {
+            'id': 123,
+        }
+
+    def items(self, obj):
+        return [obj]
+
+    def file_name(self, obj):
+        return "%s.ics" % obj['id']
+
+    def item_link(self, item):
+        return ''  # Required by the syndication framework
 
 
 class ICal20FeedTest(TestCase):
@@ -92,8 +112,6 @@ class ICal20FeedTest(TestCase):
         view = TestItemsFeed()
 
         response = view(request)
-        self.assertIn('Content-Disposition', response)
-        self.assertEqual(response['content-disposition'], 'attachment; filename="calendar.ics"')
 
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(len(calendar.subcomponents), 2)
@@ -104,7 +122,8 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), '20120501T180000')
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), '20120501T200000')
         self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
-        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), "MAILTO:john.doe@example.com")
+        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
+                          "MAILTO:john.doe@example.com")
 
         self.assertEquals(calendar.subcomponents[1]['SUMMARY'], 'Title2')
         self.assertEquals(calendar.subcomponents[1]['DESCRIPTION'], 'Description2')
@@ -112,7 +131,8 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
         self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
-        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), "MAILTO:john.doe@example.com")
+        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
+                          "MAILTO:john.doe@example.com")
 
     def test_wr_timezone(self):
         """
@@ -167,3 +187,12 @@ class ICal20FeedTest(TestCase):
 
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), '20120506T200000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].params['TZID'], 'US/Eastern')
+
+    def test_file_name(self):
+        request = RequestFactory().get("/test/ical")
+        view = TestFilenameFeed()
+
+        response = view(request)
+
+        self.assertIn('Content-Disposition', response)
+        self.assertEqual(response['content-disposition'], 'attachment; filename="123.ics"')
