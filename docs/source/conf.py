@@ -11,10 +11,11 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
-from django.conf import global_settings as settings
-from django.core.management import setup_environ
-setup_environ(settings)
+import sys
+import os
+
+# So that we can import django for the API reference.
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django.conf.global_settings")
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('../../'))
