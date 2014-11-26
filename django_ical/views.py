@@ -21,7 +21,7 @@ FEED_EXTRA_FIELDS = (
     'product_id',
     'timezone',
 )
-# Extra fields added to items (events) to 
+# Extra fields added to items (events) to
 # support ical
 ICAL_EXTRA_FIELDS = (
     'timestamp',        # dtstamp
@@ -35,11 +35,12 @@ ICAL_EXTRA_FIELDS = (
     'organizer',        # email, cn, and role
 )
 
+
 class ICalFeed(Feed):
     """
     iCalendar Feed
 
-    Existing Django syndication feeds 
+    Existing Django syndication feeds
 
     title => X-WR-CALNAME
     description => X-WR-CALDESC
@@ -48,7 +49,7 @@ class ICalFeed(Feed):
     item_title => SUMMARY
     item_description => DESCRIPTION
     item_link => URL
-     
+
     Extension fields
 
     method => METHOD
@@ -92,12 +93,12 @@ class ICalFeed(Feed):
                 argcount = attr.func_code.co_argcount
             else:
                 argcount = attr.__call__.func_code.co_argcount
-            if argcount == 2: # one argument is 'self'
+            if argcount == 2:  # one argument is 'self'
                 return attr(obj)
             else:
                 return attr()
         return attr
-    
+
     # Not used by icalendar but required
     # by the Django syndication framework.
     link = ''

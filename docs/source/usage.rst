@@ -103,7 +103,7 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 | item_end_datetime     | `DTEND`_              | The event end time          |
 +-----------------------+-----------------------+-----------------------------+
-| item_location         | `LOCATION`_           | The event lociation         |
+| item_location         | `LOCATION`_           | The event location          |
 +-----------------------+-----------------------+-----------------------------+
 | item_geolocation      | `GEO`_                | The latitude and longitude  |
 |                       |                       | of the event. The value     |
