@@ -10,16 +10,19 @@ from django.test.client import RequestFactory
 from django_ical.feedgenerator import ICal20Feed
 from django_ical.views import ICalFeed
 
+
 class TestICalFeed(ICalFeed):
     feed_type = ICal20Feed
     title = "Test Feed"
     description = "Test ICal Feed"
     items = []
 
+
 class TestItemsFeed(ICalFeed):
     feed_type = ICal20Feed
     title = "Test Feed"
     description = "Test ICal Feed"
+
     def items(self):
         return [{
             'title': 'Title1',
@@ -39,22 +42,28 @@ class TestItemsFeed(ICalFeed):
 
     def item_title(self, obj):
         return obj['title']
+
     def item_description(self, obj):
         return obj['description']
+
     def item_start_datetime(self, obj):
         return obj['start']
+
     def item_end_datetime(self, obj):
         return obj['end']
+
     def item_link(self, obj):
         return obj['link']
+
     def item_geolocation(self, obj):
         return obj.get('geolocation', None)
+
 
 class ICal20FeedTest(TestCase):
     def test_basic(self):
         request = RequestFactory().get("/test/ical")
         view = TestICalFeed()
-        
+
         response = view(request)
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(calendar['X-WR-CALNAME'], "Test Feed")
@@ -63,7 +72,7 @@ class ICal20FeedTest(TestCase):
     def test_items(self):
         request = RequestFactory().get("/test/ical")
         view = TestItemsFeed()
-        
+
         response = view(request)
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(len(calendar.subcomponents), 2)
@@ -95,7 +104,6 @@ class ICal20FeedTest(TestCase):
         response = view(request)
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(calendar['X-WR-TIMEZONE'], "Asia/Tokyo")
-
 
     def test_timezone(self):
         tokyo = pytz.timezone('Asia/Tokyo')
@@ -130,7 +138,6 @@ class ICal20FeedTest(TestCase):
 
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), '20120501T200000')
         self.assertEquals(calendar.subcomponents[0]['DTEND'].params['TZID'], 'Asia/Tokyo')
-
 
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), '20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].params['TZID'], 'US/Eastern')
