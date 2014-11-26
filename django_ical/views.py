@@ -5,8 +5,12 @@ Views for generating ical feeds.
 """
 
 from datetime import datetime
+from calendar import timegm
 
+from django.http import HttpResponse, Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.syndication.views import Feed
+from django.utils.http import http_date
 
 from django_ical import feedgenerator
 
@@ -64,16 +68,30 @@ class ICalFeed(Feed):
     item_transparency => TRANSP
     """
     feed_type = feedgenerator.DefaultFeed
-    file_name = "calendar"
 
     def __call__(self, request, *args, **kwargs):
         """
-        Extends the behaviour of Django's parent class to
-        set the filename
+        Copied from django.contrib.syndication.views.Feed
+
+        Supports file_name as a dynamic attr.
         """
-        response = super(ICalFeed, self).__call__(request, *args, **kwargs)
-        filename = "{}.ics".format(self.file_name)
-        response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+        try:
+            obj = self.get_object(request, *args, **kwargs)
+        except ObjectDoesNotExist:
+            raise Http404('Feed object does not exist.')
+        feedgen = self.get_feed(obj, request)
+        response = HttpResponse(content_type=feedgen.mime_type)
+        if hasattr(self, 'item_pubdate') or hasattr(self, 'item_updateddate'):
+            # if item_pubdate or item_updateddate is defined for the feed, set
+            # header so as ConditionalGetMiddleware is able to send 304 NOT MODIFIED
+            response['Last-Modified'] = http_date(
+                timegm(feedgen.latest_post_date().utctimetuple()))
+        feedgen.write(response, 'utf-8')
+
+        filename = self._get_dynamic_attr('file_name', obj)
+        if filename:
+            response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+
         return response
 
     def _get_dynamic_attr(self, attname, obj, default=None):
@@ -99,8 +117,8 @@ class ICalFeed(Feed):
                 return attr()
         return attr
 
-    # Not used by icalendar but required
-    # by the Django syndication framework.
+    # NOTE: Not used by icalendar but required
+    #       by the Django syndication framework.
     link = ''
 
     def method(self, obj):
