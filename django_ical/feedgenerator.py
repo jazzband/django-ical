@@ -29,8 +29,6 @@ For definitions of the iCalendar format see:
 http://www.ietf.org/rfc/rfc2445.txt
 """
 
-
-
 from icalendar import Calendar, Event
 
 from django.utils.feedgenerator import SyndicationFeed
@@ -64,11 +62,12 @@ ITEM_EVENT_FIELD_MAP = (
     ('link',                'url'),
 )
 
+
 class ICal20Feed(SyndicationFeed):
     u"""
     iCalendar 2.0 Feed implementation.
     """
-    mime_type='text/calendar; charset=utf8'
+    mime_type = 'text/calendar; charset=utf8'
 
     def write(self, outfile, encoding):
         u"""
