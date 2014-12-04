@@ -122,7 +122,7 @@ class ICal20FeedTest(TestCase):
         self.assertTrue(calendar.subcomponents[0]['URL'].endswith('/event/1'))
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b('20120501T180000'))
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b('20120501T200000'))
-        self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), ("37.386013;-122.082932"))
+        self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
         self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
                           b("MAILTO:john.doe@example.com"))
 
