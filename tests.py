@@ -13,6 +13,7 @@ def main():
     from django.conf import global_settings
 
     global_settings.SECRET_KEY = 'snakeoil'
+    global_settings.TIME_ZONE = 'UTC'
 
     global_settings.INSTALLED_APPS = (
         'django.contrib.contenttypes',

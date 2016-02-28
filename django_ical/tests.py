@@ -29,17 +29,19 @@ class TestItemsFeed(ICalFeed):
             'title': 'Title1',
             'description': 'Description1',
             'link': '/event/1',
-            'start': datetime(2012, 5, 1, 18, 00),
-            'end': datetime(2012, 5, 1, 20, 00),
+            'start': datetime(2012, 5, 1, 18, 0),
+            'end': datetime(2012, 5, 1, 20, 0),
             'geolocation': (37.386013, -122.082932),
             'organizer': 'john.doe@example.com',
+            'modified': datetime(2012, 5, 2, 10, 0),
         }, {
             'title': 'Title2',
             'description': 'Description2',
             'link': '/event/2',
-            'start': datetime(2012, 5, 6, 18, 00),
-            'end': datetime(2012, 5, 6, 20, 00),
+            'start': datetime(2012, 5, 6, 18, 0),
+            'end': datetime(2012, 5, 6, 20, 0),
             'geolocation': (37.386013, -122.082932),
+            'modified': datetime(2012, 5, 7, 10, 0),
             'organizer': {
                 'cn': 'John Doe',
                 'email': 'john.doe@example.com',
@@ -64,6 +66,12 @@ class TestItemsFeed(ICalFeed):
 
     def item_geolocation(self, obj):
         return obj.get('geolocation', None)
+
+    def item_updateddate(self, obj):
+        return obj.get('modified', None)
+
+    def item_pubdate(self, obj):
+        return obj.get('modified', None)
 
     def item_organizer(self, obj):
         organizer_dic = obj.get('organizer', None)
@@ -123,6 +131,7 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b('20120501T180000'))
         self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b('20120501T200000'))
         self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
+        self.assertEquals(calendar.subcomponents[0]['LAST-MODIFIED'].to_ical(), b('20120502T100000Z'))
         self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
                           b("MAILTO:john.doe@example.com"))
 
@@ -132,7 +141,8 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b('20120506T180000'))
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b('20120506T200000'))
         self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
-        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
+        self.assertEquals(calendar.subcomponents[1]['LAST-MODIFIED'].to_ical(), b('20120507T100000Z'))
+        self.assertEquals(calendar.subcomponents[1]['ORGANIZER'].to_ical(),
                           b("MAILTO:john.doe@example.com"))
 
     def test_wr_timezone(self):

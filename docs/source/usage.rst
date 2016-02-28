@@ -131,7 +131,7 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 | item_created          | `CREATED`_            | The event create time       |
 +-----------------------+-----------------------+-----------------------------+
-| item_updated          | `LAST-MODIFIED`_      | The event modified time     |
+| item_updateddate      | `LAST-MODIFIED`_      | The event modified time     |
 +-----------------------+-----------------------+-----------------------------+
 | item_start_datetime   | `DTSTART`_            | The event start time        |
 +-----------------------+-----------------------+-----------------------------+

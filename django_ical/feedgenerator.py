@@ -54,7 +54,7 @@ ITEM_EVENT_FIELD_MAP = (
     ('description',         'description'),
     ('start_datetime',      'dtstart'),
     ('end_datetime',        'dtend'),
-    ('updated',             'last-modified'),
+    ('updateddate',         'last-modified'),
     ('created',             'created'),
     ('timestamp',           'dtstamp'),
     ('transparency',        'transp'),

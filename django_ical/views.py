@@ -7,6 +7,7 @@ Views for generating ical feeds.
 from datetime import datetime
 from calendar import timegm
 
+import django
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.syndication.views import Feed
@@ -29,19 +30,23 @@ FEED_EXTRA_FIELDS = (
     'product_id',
     'timezone',
 )
+
 # Extra fields added to items (events) to
 # support ical
-ICAL_EXTRA_FIELDS = (
+ICAL_EXTRA_FIELDS = [
     'timestamp',        # dtstamp
     'created',          # created
-    'modified',         # last-modified
     'start_datetime',   # dtstart
     'end_datetime',     # dtend
     'transparency',     # transp
     'location',         # location
     'geolocation',      # latitude;longitude
     'organizer',        # email, cn, and role
-)
+]
+
+# For Django <1.7
+if django.VERSION < (1, 7):
+    ICAL_EXTRA_FIELDS.append('updateddate')
 
 
 class ICalFeed(Feed):
@@ -56,6 +61,7 @@ class ICalFeed(Feed):
     :item_title: SUMMARY
     :item_description: DESCRIPTION
     :item_link: URL
+    :item_updateddate: LAST-MODIFIED
 
     Extension fields
 
@@ -64,7 +70,6 @@ class ICalFeed(Feed):
     :item_class: CLASS
     :item_timestamp: DTSTAMP
     :item_created: CREATED
-    :item_modified: LAST-MODIFIED
     :item_start_datetime: DTSTART
     :item_end_datetime: DTEND
     :item_transparency: TRANSP
