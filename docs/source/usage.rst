@@ -59,7 +59,7 @@ File Downloads
 ------------------
 
 The `file_name` parameter is an optional used as base name when generating the file. By
-default django_ics will not set the Content-Disposition header of the response. By setting
+default django-ical will not set the Content-Disposition header of the response. By setting
 the file_name parameter you can cause django_ical to set the Content-Disposition header
 and set the file name. In the example below, it will be called "event.ics".
 
