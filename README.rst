@@ -2,6 +2,8 @@
 django-ical
 ====================
 
+|docs|
+
 django-ical is a simple library/framework for creating `ical
 <http://www.ietf.org/rfc/rfc2445.txt>`_ feeds based in Django's `syndication
 feed framework
@@ -29,3 +31,8 @@ Requirements
 * `Django <http://www.djangoproject.com/>`_ >= 1.3.4
 * `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 3.1
 * `six <https://pypi.python.org/pypi/six>`_ is required for Django versions < 1.4.2
+
+.. |docs| image:: https://readthedocs.org/projects/django-ics/badge/?version=latest
+    :alt: Documentation Status
+    :scale: 100%
+    :target: http://django-ics.readthedocs.org/en/latest/?badge=latest
