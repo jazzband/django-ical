@@ -25,6 +25,7 @@ Requirements:
 
 * `Django <http://www.djangoproject.com/>`_ >= 1.3
 * `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 2.0.1
+* `six <https://pypi.python.org/pypi/six>`_ is required for Django versions < 1.4.2
 
 Contents:
 
