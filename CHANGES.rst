@@ -1,6 +1,14 @@
 CHANGES
 =======
 
+1.4
+------
+
+- Django up to 1.9 is supported.
+- Added new `ttl` parameter. *Thanks, Diaz-Gutierrez*
+- Added support for Python 3. *Thanks, Ben Lopatin*
+- Fixed LAST-MODIFIED support. *Thanks, Brad Bell*
+
 1.3
 ------
 
