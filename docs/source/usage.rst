@@ -7,7 +7,7 @@ Overview
 The high level ical feed-generating is supplied by the :class:`ICalFeed
 <django_ical.views.ICalFeed>` class.  To create a feed, write a
 :class:`ICalFeed <django_ical.views.ICalFeed>` class and point to an instance
-of it in your `URLconf <https://docs.djangoproject.com/en/1.7/topics/http/urls/>`_.
+of it in your `URLconf <https://docs.djangoproject.com/en/1.9/topics/http/urls/>`_.
 
 With RSS feeds, the items in the feed represent articles or simple web pages.
 The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
@@ -177,7 +177,7 @@ You use this framework on your own, for lower-level feed generation. You can
 also create custom feed generator subclasses for use with the feed_type
 option.
 
-See: `The syndication feed framework: Specifying the type of feed <https://docs.djangoproject.com/en/1.7/ref/contrib/syndication/#specifying-the-type-of-feed>`_
+See: `The syndication feed framework: Specifying the type of feed <https://docs.djangoproject.com/en/1.9/ref/contrib/syndication/#specifying-the-type-of-feed>`_
 
 .. _PRODID: http://www.kanzaki.com/docs/ical/prodid.html
 .. _METHOD: http://www.kanzaki.com/docs/ical/method.html
