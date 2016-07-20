@@ -1,4 +1,6 @@
 language: python
+python:
+  - "3.5"
 env:
     - TOX_ENV=py26-django13
     - TOX_ENV=py26-django14
