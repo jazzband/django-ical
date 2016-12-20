@@ -2,7 +2,7 @@
 django-ical
 ====================
 
-|docs|
+|docs| |build|
 
 django-ical is a simple library/framework for creating `ical
 <http://www.ietf.org/rfc/rfc2445.txt>`_ feeds based in Django's `syndication
@@ -36,3 +36,6 @@ Requirements
     :alt: Documentation Status
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
+    
+.. |build| image:: https://travis-ci.org/browniebroke/django-ical.svg?branch=travis-ci
+    :target: https://travis-ci.org/browniebroke/django-ical
