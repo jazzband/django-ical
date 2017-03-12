@@ -42,6 +42,10 @@ ICAL_EXTRA_FIELDS = [
     'location',         # location
     'geolocation',      # latitude;longitude
     'organizer',        # email, cn, and role
+    'rrule',            # rrule
+    'exrule',           # exrule
+    'rdate',            # rdate
+    'exdate',           # exdate
 ]
 
 # For Django <1.7
