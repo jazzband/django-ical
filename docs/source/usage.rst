@@ -108,7 +108,7 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 | title                 | `X-WR-CALNAME`_       | The calendar name/title     |
 +-----------------------+-----------------------+-----------------------------+
-| description           | `X-WR-CALDESC`_       | The calendar name/title     |
+| description           | `X-WR-CALDESC`_       | The calendar description    |
 +-----------------------+-----------------------+-----------------------------+
 | method                | `METHOD`_             | The calendar method such as |
 |                       |                       | meeting requests.           |
