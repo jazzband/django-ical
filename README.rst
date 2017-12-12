@@ -37,5 +37,5 @@ Requirements
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
     
-.. |build| image:: https://travis-ci.org/browniebroke/django-ical.svg?branch=travis-ci
-    :target: https://travis-ci.org/browniebroke/django-ical
+.. |build| image:: https://travis-ci.org/pinkerton/django-ical.svg?branch=master
+    :target: https://travis-ci.org/pinkerton/django-ical

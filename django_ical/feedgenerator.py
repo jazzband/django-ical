@@ -67,6 +67,7 @@ ITEM_EVENT_FIELD_MAP = (
     ('exrule',              'exrule'),
     ('rdate',               'rdate'),
     ('exdate',              'exdate'),
+    ('status',              'status'),
 )
 
 

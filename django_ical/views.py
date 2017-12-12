@@ -46,6 +46,7 @@ ICAL_EXTRA_FIELDS = [
     'exrule',           # exrule
     'rdate',            # rdate
     'exdate',           # exdate
+    'status',           # CONFIRMED|TENTATIVE|CANCELLED
 ]
 
 # For Django <1.7
