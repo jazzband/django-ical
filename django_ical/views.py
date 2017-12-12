@@ -42,6 +42,7 @@ ICAL_EXTRA_FIELDS = [
     'location',         # location
     'geolocation',      # latitude;longitude
     'organizer',        # email, cn, and role
+    'status',           # CONFIRMED|TENTATIVE|CANCELLED
 ]
 
 # For Django <1.7
