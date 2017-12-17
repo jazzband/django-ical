@@ -160,6 +160,30 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | or tests to know how to     |
 |                       |                       | build them.                 |
 +-----------------------+-----------------------+-----------------------------+
+| item_rrule            | `RRULE`_              | The recurrence rule for     |
+|                       |                       | repeating events.           |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_rdate            | `RDATE`_              | The recurring dates/times   |
+|                       |                       | for a repeating event.      |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_exdate           | `EXDATE`_             | The dates/times for         |
+|                       |                       | exceptions of a recurring   |
+|                       |                       | event.                      |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_status           | `STATUS`_             | The status of an event.     |
+|                       |                       | Can be CONFIRMED, CANCELLED |
+|                       |                       | or TENTATIVE.               |
++-----------------------+-----------------------+-----------------------------+
+
 
 Note:
 
@@ -194,6 +218,11 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _TRANSP: http://www.kanzaki.com/docs/ical/transp.html
 .. _URL: http://www.kanzaki.com/docs/ical/url.html
 .. _ORGANIZER: http://www.kanzaki.com/docs/ical/organizer.html
+.. _RRULE: https://www.kanzaki.com/docs/ical/rrule.html
+.. _EXRULE: https://www.kanzaki.com/docs/ical/exrule.html
+.. _RDATE: https://www.kanzaki.com/docs/ical/rdate.html
+.. _EXDATE: https://www.kanzaki.com/docs/ical/exdate.html
+.. _STATUS: https://www.kanzaki.com/docs/ical/status.html
 .. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
