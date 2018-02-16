@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+1.5
+------
+
+- Django up to 1.11 is supported. *Thanks, Martin Bächtold*
+- Add support for categories, rrule, exrule, rrdate, exdate. *Thanks, Armin Leuprecht*
+- Documentation typo fix. *Thanks, Giorgos Logiotatidis*
+
 1.4
 ------
 
