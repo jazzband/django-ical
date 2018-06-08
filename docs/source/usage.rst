@@ -37,7 +37,7 @@ extension that supplies the start time of the event.
 
         def item_description(self, item):
             return item.description
-        
+
         def item_start_datetime(self, item):
             return item.start_datetime
 
@@ -116,7 +116,7 @@ Here is a table of all of the fields that django-ical supports.
 | item_guid             | `UID`_                | The event's unique id.      |
 |                       |                       | This id should be           |
 |                       |                       | *globally* unique so you    |
-|                       |                       | should add an               | 
+|                       |                       | should add an               |
 |                       |                       | @<domain_name> to your id.  |
 +-----------------------+-----------------------+-----------------------------+
 | item_title            | `SUMMARY`_            | The event name/title        |
@@ -227,3 +227,4 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _iCalendar: http://icalendar.readthedocs.org/en/latest/index.html
+.. _CATEGORIES: https://www.kanzaki.com/docs/ical/categories.html
