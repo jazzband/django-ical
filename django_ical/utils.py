@@ -9,42 +9,6 @@ from __future__ import unicode_literals
 from icalendar.prop import vRecur
 
 
-def build_rrule_from_text(rrule_str):
-    """Build an rrule from a serialzed RRULE string."""
-    recurr = vRecur()
-    return recurr.from_ical(rrule_str)
-
-
-def build_rrule_from_recurrences_rrule(rule):
-    """
-    Build rrule dictionary for vRecur class from a django_recurrences rrule.
-
-    django_recurrences is a popular implementation for recurrences in django.
-    https://pypi.org/project/django-recurrence/
-    this is a shortcut to interface between recurrences and icalendar.
-    """
-    from recurrence import serialize
-    line = serialize(rule)
-    if line.startswith('RRULE:'):
-        line = line[6:]
-    return build_rrule_from_text(line)
-
-
-def build_rrule_from_dateutil_rrule(rule):
-    """
-    Build rrule dictionary for vRecur class from a dateutil rrule.
-
-    Dateutils rrule is a popular implementation of rrule in python.
-    https://pypi.org/project/python-dateutil/
-    this is a shortcut to interface between dateutil and icalendar.
-    """
-    lines = str(rule).splitlines()
-    for line in lines:
-        if line.startswith('DTSTART:'):
-            continue
-        return build_rrule_from_text(line)
-
-
 def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
                 byhour=None, byweekno=None, bymonthday=None, byyearday=None,
                 bymonth=None, until=None, bysetpos=None, wkst=None, byday=None,
@@ -114,3 +78,39 @@ def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
         result['FREQ'] = freq
 
     return result
+
+
+def build_rrule_from_text(rrule_str):
+    """Build an rrule from a serialzed RRULE string."""
+    recurr = vRecur()
+    return recurr.from_ical(rrule_str)
+
+
+def build_rrule_from_recurrences_rrule(rule):
+    """
+    Build rrule dictionary for vRecur class from a django_recurrences rrule.
+
+    django_recurrences is a popular implementation for recurrences in django.
+    https://pypi.org/project/django-recurrence/
+    this is a shortcut to interface between recurrences and icalendar.
+    """
+    from recurrence import serialize
+    line = serialize(rule)
+    if line.startswith('RRULE:'):
+        line = line[6:]
+    return build_rrule_from_text(line)
+
+
+def build_rrule_from_dateutil_rrule(rule):
+    """
+    Build rrule dictionary for vRecur class from a dateutil rrule.
+
+    Dateutils rrule is a popular implementation of rrule in python.
+    https://pypi.org/project/python-dateutil/
+    this is a shortcut to interface between dateutil and icalendar.
+    """
+    lines = str(rule).splitlines()
+    for line in lines:
+        if line.startswith('DTSTART:'):
+            continue
+        return build_rrule_from_text(line)
