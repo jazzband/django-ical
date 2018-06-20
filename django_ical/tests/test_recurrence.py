@@ -7,14 +7,24 @@ from __future__ import unicode_literals
 
 # Standard Library
 import datetime
-import pytz
 
 # Django
 from django.test import TestCase
-from django_ical import utils
 
-# 3rd party
+# 3rd-party
+import pytz
+from dateutil.rrule import DAILY
+from dateutil.rrule import MO
+from dateutil.rrule import MONTHLY
+from dateutil.rrule import TH
+from dateutil.rrule import TU
+from dateutil.rrule import WEEKLY
+from dateutil.rrule import YEARLY
+from dateutil.rrule import rrule
 from icalendar.prop import vRecur
+
+# Project
+from django_ical import utils
 
 
 class BuildRruleTest(TestCase):
@@ -161,7 +171,7 @@ class BuildRruleTest(TestCase):
 
     def test_every_week_until_jan_2007(self):
         """Repeat every week until January 1, 2007."""
-        utc=pytz.UTC
+        utc = pytz.UTC
         jan2007 = datetime.datetime(2007, 1, 1, 0, 0, tzinfo=utc)
         vrecurr = utils.build_rrule(freq='WEEKLY', until=jan2007)
         assert vrecurr['FREQ'] == 'WEEKLY'
@@ -370,7 +380,7 @@ class FromTextTests(TestCase):
 
     def test_every_week_until_jan_2007(self):
         """Repeat every week until January 1, 2007."""
-        utc=pytz.UTC
+        utc = pytz.UTC
         vrecurr = utils.build_rrule_from_text('FREQ=WEEKLY;UNTIL=20070101T000000Z')
         assert vrecurr['FREQ'] == ['WEEKLY']
         assert vrecurr['UNTIL'] == [datetime.datetime(2007, 1, 1, 0, 0, tzinfo=utc)]
@@ -427,3 +437,122 @@ class FromTextTests(TestCase):
         assert vrecurr['BYDAY'] == ['FR']
         assert vRecur(vrecurr).to_ical() == 'FREQ=YEARLY;BYDAY=FR;BYMONTHDAY=13'
         assert len(vrecurr.keys()) == 3
+
+
+class FromDateutilRruleTests(TestCase):
+    """Build an ical string from a dateutil rrule."""
+
+    def test_weekly_by_month_year_day(self):
+        rule = rrule(WEEKLY,
+                     bymonth=(1, 7),
+                     byyearday=(1, 100, 200, 365),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;BYYEARDAY=1,100,200,365;BYMONTH=1,7'
+
+    def test_weekly_by_month_nweekday(self):
+        rule = rrule(WEEKLY,
+                     count=3,
+                     bymonth=(1, 3),
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYDAY=TU,TH;BYMONTH=1,3'
+
+    def test_weekly_by_monthday(self):
+        rule = rrule(WEEKLY,
+                     count=3,
+                     bymonthday=(1, 3),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYMONTHDAY=1,3'
+
+    def test_weekly_by_weekday(self):
+        rule = rrule(WEEKLY,
+                     count=3,
+                     byweekday=(TU, TH),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYDAY=TU,TH'
+
+    def test_weekly_by_month_nweekday(self):
+        rule = rrule(WEEKLY,
+                     count=3,
+                     bymonth=(1, 3),
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYDAY=TU,TH;BYMONTH=1,3'
+
+    def test_daily_by_month_nweekday(self):
+        rule = rrule(DAILY,
+                     count=3,
+                     bymonth=(1, 3),
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=DAILY;COUNT=3;BYDAY=TU,TH;BYMONTH=1,3'
+
+    def test_yearly_month_nweekday(self):
+        rule = rrule(YEARLY,
+                     count=3,
+                     bymonth=(1, 3),
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=YEARLY;COUNT=3;BYDAY=+1TU,-1TH;BYMONTH=1,3'
+
+    def test_yearly_month_yearday(self):
+        rule = rrule(YEARLY,
+                     count=4,
+                     bymonth=(4, 7),
+                     byyearday=(1, 100, 200, 365),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical(
+        ) == 'FREQ=YEARLY;COUNT=4;BYYEARDAY=1,100,200,365;BYMONTH=4,7'
+
+    def test_yearly_weekno_weekday(self):
+        rule = rrule(YEARLY,
+                     count=3,
+                     byweekno=1,
+                     byweekday=MO,
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=YEARLY;COUNT=3;BYDAY=MO;BYWEEKNO=1'
+
+    def test_yearly_setpos(self):
+        rule = rrule(YEARLY,
+                     count=3,
+                     bymonthday=15,
+                     byhour=(6, 18),
+                     bysetpos=(3, -3),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical(
+        ) == 'FREQ=YEARLY;COUNT=3;BYHOUR=6,18;BYMONTHDAY=15;BYSETPOS=3,-3'
+
+    def test_monthly_month_monthday(self):
+        rule = rrule(MONTHLY,
+                     count=3,
+                     bymonth=(1, 3),
+                     bymonthday=(5, 7),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=MONTHLY;COUNT=3;BYMONTHDAY=5,7;BYMONTH=1,3'
+
+    def test_monthly_nweekday(self):
+        rule = rrule(MONTHLY,
+                     count=3,
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=MONTHLY;COUNT=3;BYDAY=+1TU,-1TH'
+
+    def test_monthly_month_nweekday(self):
+        rule = rrule(MONTHLY,
+                     bymonth=(1, 3),
+                     byweekday=(TU(1), TH(-1)),
+                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
+        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=MONTHLY;BYDAY=+1TU,-1TH;BYMONTH=1,3'

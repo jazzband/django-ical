@@ -14,7 +14,8 @@ def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
                 bymonth=None, until=None, bysetpos=None, wkst=None, byday=None,
                 freq=None):
     """
-    Builds rrule dictionary for vRecur class
+    Build rrule dictionary for vRecur class.
+
     :param count: int
     :param interval: int
     :param bysecond: int
@@ -74,7 +75,8 @@ def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
 
     if freq is not None:
         if freq not in vRecur.frequencies:
-            raise ValueError('Frequency value should be one of: %s' % vRecur.frequencies)
+            raise ValueError('Frequency value should be one of: {0}'
+                             .format(vRecur.frequencies))
         result['FREQ'] = freq
 
     return result
@@ -113,4 +115,6 @@ def build_rrule_from_dateutil_rrule(rule):
     for line in lines:
         if line.startswith('DTSTART:'):
             continue
+        if line.startswith('RRULE:'):
+            line = line[6:]
         return build_rrule_from_text(line)

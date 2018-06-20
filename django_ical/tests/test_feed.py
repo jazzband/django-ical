@@ -1,13 +1,18 @@
 #:coding=utf-8:
 
-import pytz
-import icalendar
+# Standard Library
 from datetime import datetime
 
+# Django
 from django.test import TestCase
 from django.test.client import RequestFactory
+
+# 3rd-party
+import icalendar
+import pytz
 from six import b
 
+# Project
 from django_ical.feedgenerator import ICal20Feed
 from django_ical.views import ICalFeed
 
