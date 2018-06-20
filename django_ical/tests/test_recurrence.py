@@ -13,6 +13,7 @@ from django.test import TestCase
 
 # 3rd-party
 import pytz
+import recurrence
 from dateutil.rrule import DAILY
 from dateutil.rrule import MO
 from dateutil.rrule import MONTHLY
@@ -475,15 +476,6 @@ class FromDateutilRruleTests(TestCase):
         vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
         assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYDAY=TU,TH'
 
-    def test_weekly_by_month_nweekday(self):
-        rule = rrule(WEEKLY,
-                     count=3,
-                     bymonth=(1, 3),
-                     byweekday=(TU(1), TH(-1)),
-                     dtstart=datetime.datetime(1997, 9, 2, 9, 0))
-        vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
-        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY;COUNT=3;BYDAY=TU,TH;BYMONTH=1,3'
-
     def test_daily_by_month_nweekday(self):
         rule = rrule(DAILY,
                      count=3,
@@ -556,3 +548,45 @@ class FromDateutilRruleTests(TestCase):
                      dtstart=datetime.datetime(1997, 9, 2, 9, 0))
         vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
         assert vRecur(vrecurr).to_ical() == 'FREQ=MONTHLY;BYDAY=+1TU,-1TH;BYMONTH=1,3'
+
+class FromDjangoRecurrenceRruleTests(TestCase):
+    """Build an ical string from a django-recurrence rrule."""
+
+    def test_rule(self):
+        rule = recurrence.Rule(
+            recurrence.WEEKLY
+        )
+        vrecurr = utils.build_rrule_from_recurrences_rrule(rule)
+        assert vRecur(vrecurr).to_ical() == 'FREQ=WEEKLY'
+
+    def test_complex_rule_serialization(self):
+        rule = recurrence.Rule(
+            recurrence.WEEKLY,
+            interval=17,
+            wkst=1,
+            count=7,
+            byday=[
+                recurrence.to_weekday('-1MO'),
+                recurrence.to_weekday('TU')
+            ],
+            bymonth=[1, 3]
+        )
+        vrecurr = utils.build_rrule_from_recurrences_rrule(rule)
+        assert vRecur(vrecurr).to_ical(
+        ) == 'FREQ=WEEKLY;COUNT=7;INTERVAL=17;BYDAY=-1MO,TU;BYMONTH=1,3;WKST=TU'
+
+    def test_complex_rule_serialization_with_weekday_instance(self):
+        rule = recurrence.Rule(
+            recurrence.WEEKLY,
+            interval=17,
+            wkst=recurrence.to_weekday(1),
+            count=7,
+            byday=[
+                recurrence.to_weekday('-1MO'),
+                recurrence.to_weekday('TU')
+            ],
+            bymonth=[1, 3]
+        )
+        vrecurr = utils.build_rrule_from_recurrences_rrule(rule)
+        assert vRecur(vrecurr).to_ical(
+        ) == 'FREQ=WEEKLY;COUNT=7;INTERVAL=17;BYDAY=-1MO,TU;BYMONTH=1,3;WKST=TU'
