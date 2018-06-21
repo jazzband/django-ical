@@ -55,6 +55,51 @@ your URLconf. For example:
         # ...
     )
 
+Example how recurrences are built using the django-recurrence_ package:
+
+.. code-block:: python
+
+    from django_ical.utils import build_rrule_from_recurrences_rrule
+    from django_ical.views import ICalFeed
+    from examplecom.models import Event
+
+    class EventFeed(ICalFeed):
+        """
+        A simple event calender
+        """
+        # ...
+
+        def item_rrule(self, item):
+            """Adapt Event recurrence to Feed Entry rrule."""
+            if item.recurrences:
+                rules = []
+                for rule in item.recurrences.rrules:
+                    rules.append(build_rrule_from_recurrences_rrule(rule))
+                return rules
+
+        def item_exrule(self, item):
+            """Adapt Event recurrence to Feed Entry exrule."""
+            if item.recurrences:
+                rules = []
+                for rule in item.recurrences.exrules:
+                    rules.append(build_rrule_from_recurrences_rrule(rule))
+                return rules
+
+        def item_rdate(self, item):
+            """Adapt Event recurrence to Feed Entry rdate."""
+            if item.recurrences:
+                return item.recurrences.rdates
+
+        def item_exdate(self, item):
+            """Adapt Event recurrence to Feed Entry exdate."""
+            if item.recurrences:
+                return item.recurrences.exdates
+
+Note that in ``django_ical.utils`` are also convienience methods to build ``rrules`` from
+scratch, from string (serialized iCal) and ``dateutil.rrule``.
+
+
+
 File Downloads
 ------------------
 
@@ -228,3 +273,4 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _iCalendar: http://icalendar.readthedocs.org/en/latest/index.html
 .. _CATEGORIES: https://www.kanzaki.com/docs/ical/categories.html
+.. _django-recurrence: https://github.com/django-recurrence/django-recurrence
