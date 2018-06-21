@@ -1,6 +1,7 @@
 #:coding=utf-8:
 
 # Standard Library
+from datetime import date
 from datetime import datetime
 
 # Django
@@ -13,6 +14,7 @@ import pytz
 from six import b
 
 # Project
+from django_ical import utils
 from django_ical.feedgenerator import ICal20Feed
 from django_ical.views import ICalFeed
 
@@ -36,6 +38,14 @@ class TestItemsFeed(ICalFeed):
             'link': '/event/1',
             'start': datetime(2012, 5, 1, 18, 0),
             'end': datetime(2012, 5, 1, 20, 0),
+            'recurrences': {
+                'rrules': [utils.build_rrule(freq='DAILY', byhour=10),
+                           utils.build_rrule(freq='MONTHLY', bymonthday=4)],
+                'xrules': [utils.build_rrule(freq='MONTHLY', bymonthday=-4),
+                           utils.build_rrule(freq='MONTHLY', byday='+3TU')],
+                'rdates': [date(1999, 9, 2), date(1998, 1, 1)],
+                'xdates': [date(1999, 8, 1), date(1998, 2, 1)],
+            },
             'geolocation': (37.386013, -122.082932),
             'organizer': 'john.doe@example.com',
             'modified': datetime(2012, 5, 2, 10, 0),
@@ -45,6 +55,12 @@ class TestItemsFeed(ICalFeed):
             'link': '/event/2',
             'start': datetime(2012, 5, 6, 18, 0),
             'end': datetime(2012, 5, 6, 20, 0),
+            'recurrences': {
+                'rrules': [utils.build_rrule(freq='WEEKLY', byday=['MO', 'TU', 'WE', 'TH', 'FR'])],
+                'xrules': [utils.build_rrule(freq='MONTHLY', byday='-3TU')],
+                'rdates': [date(1997, 9, 2)],
+                'xdates': [date(1997, 8, 1)],
+            },
             'geolocation': (37.386013, -122.082932),
             'modified': datetime(2012, 5, 7, 10, 0),
             'organizer': {
@@ -65,6 +81,18 @@ class TestItemsFeed(ICalFeed):
 
     def item_end_datetime(self, obj):
         return obj['end']
+
+    def item_rrule(self, obj):
+        return obj['recurrences']['rrules']
+
+    def item_exrule(self, obj):
+        return obj['recurrences']['xrules']
+
+    def item_rdate(self, obj):
+        return obj['recurrences']['rdates']
+
+    def item_exdate(self, obj):
+        return obj['recurrences']['xdates']
 
     def item_link(self, obj):
         return obj['link']
@@ -139,12 +167,21 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['LAST-MODIFIED'].to_ical(), b('20120502T100000Z'))
         self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
                           b("MAILTO:john.doe@example.com"))
-
+        self.assertEquals(calendar.subcomponents[0]['RRULE'][0].to_ical(), b('FREQ=DAILY;BYHOUR=10'))
+        self.assertEquals(calendar.subcomponents[0]['RRULE'][1].to_ical(), b('FREQ=MONTHLY;BYMONTHDAY=4'))
+        self.assertEquals(calendar.subcomponents[0]['EXRULE'][0].to_ical(), b('FREQ=MONTHLY;BYMONTHDAY=-4'))
+        self.assertEquals(calendar.subcomponents[0]['EXRULE'][1].to_ical(), b('FREQ=MONTHLY;BYDAY=+3TU'))
+        self.assertEquals(calendar.subcomponents[0]['RDATE'].to_ical(), b('19990902,19980101'))
+        self.assertEquals(calendar.subcomponents[0]['EXDATE'].to_ical(), b('19990801,19980201'))
         self.assertEquals(calendar.subcomponents[1]['SUMMARY'], 'Title2')
         self.assertEquals(calendar.subcomponents[1]['DESCRIPTION'], 'Description2')
         self.assertTrue(calendar.subcomponents[1]['URL'].endswith('/event/2'))
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b('20120506T180000'))
         self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b('20120506T200000'))
+        self.assertEquals(calendar.subcomponents[1]['RRULE'].to_ical(), b('FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR'))
+        self.assertEquals(calendar.subcomponents[1]['EXRULE'].to_ical(), b('FREQ=MONTHLY;BYDAY=-3TU'))
+        self.assertEquals(calendar.subcomponents[1]['RDATE'].to_ical(), b('19970902'))
+        self.assertEquals(calendar.subcomponents[1]['EXDATE'].to_ical(), b('19970801'))
         self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
         self.assertEquals(calendar.subcomponents[1]['LAST-MODIFIED'].to_ical(), b('20120507T100000Z'))
         self.assertEquals(calendar.subcomponents[1]['ORGANIZER'].to_ical(),
@@ -176,13 +213,24 @@ class ICal20FeedTest(TestCase):
                     'link': '/event/1',
                     'start': datetime(2012, 5, 1, 18, 00, tzinfo=tokyo),
                     'end': datetime(2012, 5, 1, 20, 00, tzinfo=tokyo),
-
+                    'recurrences': {
+                        'rrules': [],
+                        'xrules': [],
+                        'rdates': [],
+                        'xdates': [],
+                    },
                 }, {
                     'title': 'Title2',
                     'description': 'Description2',
                     'link': '/event/2',
                     'start': datetime(2012, 5, 6, 18, 00, tzinfo=us_eastern),
                     'end': datetime(2012, 5, 6, 20, 00, tzinfo=us_eastern),
+                    'recurrences': {
+                        'rrules': [],
+                        'xrules': [],
+                        'rdates': [],
+                        'xdates': [],
+                    },
                 }]
 
         request = RequestFactory().get("/test/ical")

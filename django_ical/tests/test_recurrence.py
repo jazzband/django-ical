@@ -549,6 +549,7 @@ class FromDateutilRruleTests(TestCase):
         vrecurr = utils.build_rrule_from_dateutil_rrule(rule)
         vRecur(vrecurr).to_ical().decode() == 'FREQ=MONTHLY;BYDAY=+1TU,-1TH;BYMONTH=1,3'
 
+
 class FromDjangoRecurrenceRruleTests(TestCase):
     """Build an ical string from a django-recurrence rrule."""
 
