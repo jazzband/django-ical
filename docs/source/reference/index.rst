@@ -10,3 +10,4 @@
 
     django_ical.feedgenerator
     django_ical.views
+    django_ical.utils

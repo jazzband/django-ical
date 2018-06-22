@@ -37,7 +37,7 @@ extension that supplies the start time of the event.
 
         def item_description(self, item):
             return item.description
-        
+
         def item_start_datetime(self, item):
             return item.start_datetime
 
@@ -54,6 +54,51 @@ your URLconf. For example:
         (r'^latest/feed.ics$', EventFeed()),
         # ...
     )
+
+Example how recurrences are built using the django-recurrence_ package:
+
+.. code-block:: python
+
+    from django_ical.utils import build_rrule_from_recurrences_rrule
+    from django_ical.views import ICalFeed
+    from examplecom.models import Event
+
+    class EventFeed(ICalFeed):
+        """
+        A simple event calender
+        """
+        # ...
+
+        def item_rrule(self, item):
+            """Adapt Event recurrence to Feed Entry rrule."""
+            if item.recurrences:
+                rules = []
+                for rule in item.recurrences.rrules:
+                    rules.append(build_rrule_from_recurrences_rrule(rule))
+                return rules
+
+        def item_exrule(self, item):
+            """Adapt Event recurrence to Feed Entry exrule."""
+            if item.recurrences:
+                rules = []
+                for rule in item.recurrences.exrules:
+                    rules.append(build_rrule_from_recurrences_rrule(rule))
+                return rules
+
+        def item_rdate(self, item):
+            """Adapt Event recurrence to Feed Entry rdate."""
+            if item.recurrences:
+                return item.recurrences.rdates
+
+        def item_exdate(self, item):
+            """Adapt Event recurrence to Feed Entry exdate."""
+            if item.recurrences:
+                return item.recurrences.exdates
+
+Note that in ``django_ical.utils`` are also convienience methods to build ``rrules`` from
+scratch, from string (serialized iCal) and ``dateutil.rrule``.
+
+
 
 File Downloads
 ------------------
@@ -116,7 +161,7 @@ Here is a table of all of the fields that django-ical supports.
 | item_guid             | `UID`_                | The event's unique id.      |
 |                       |                       | This id should be           |
 |                       |                       | *globally* unique so you    |
-|                       |                       | should add an               | 
+|                       |                       | should add an               |
 |                       |                       | @<domain_name> to your id.  |
 +-----------------------+-----------------------+-----------------------------+
 | item_title            | `SUMMARY`_            | The event name/title        |
@@ -160,6 +205,30 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | or tests to know how to     |
 |                       |                       | build them.                 |
 +-----------------------+-----------------------+-----------------------------+
+| item_rrule            | `RRULE`_              | The recurrence rule for     |
+|                       |                       | repeating events.           |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_rdate            | `RDATE`_              | The recurring dates/times   |
+|                       |                       | for a repeating event.      |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_exdate           | `EXDATE`_             | The dates/times for         |
+|                       |                       | exceptions of a recurring   |
+|                       |                       | event.                      |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
+| item_status           | `STATUS`_             | The status of an event.     |
+|                       |                       | Can be CONFIRMED, CANCELLED |
+|                       |                       | or TENTATIVE.               |
++-----------------------+-----------------------+-----------------------------+
+
 
 Note:
 
@@ -194,7 +263,14 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _TRANSP: http://www.kanzaki.com/docs/ical/transp.html
 .. _URL: http://www.kanzaki.com/docs/ical/url.html
 .. _ORGANIZER: http://www.kanzaki.com/docs/ical/organizer.html
+.. _RRULE: https://www.kanzaki.com/docs/ical/rrule.html
+.. _EXRULE: https://www.kanzaki.com/docs/ical/exrule.html
+.. _RDATE: https://www.kanzaki.com/docs/ical/rdate.html
+.. _EXDATE: https://www.kanzaki.com/docs/ical/exdate.html
+.. _STATUS: https://www.kanzaki.com/docs/ical/status.html
 .. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _iCalendar: http://icalendar.readthedocs.org/en/latest/index.html
+.. _CATEGORIES: https://www.kanzaki.com/docs/ical/categories.html
+.. _django-recurrence: https://github.com/django-recurrence/django-recurrence
