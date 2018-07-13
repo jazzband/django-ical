@@ -4,9 +4,12 @@ CHANGES
 1.5
 ------
 
-- Django up to 1.11 is supported. *Thanks, Martin Bächtold*
+- Add support for Django 1.11. *Thanks, Martin Bächtold*
+- Drop support for Python 2.6. *Thanks, Martin Bächtold*
 - Add support for categories, rrule, exrule, rrdate, exdate. *Thanks, Armin Leuprecht*
-- Documentation typo fix. *Thanks, Giorgos Logiotatidis*
+- Fix a documentation typo. *Thanks, Giorgos Logiotatidis*
+- Add documentation and testing around recurring events. *Thanks, Christian Ledermann*
+- Remove tests for Django versions < 1.8 *Thanks, Christian Ledermann*
 
 1.4
 ------
