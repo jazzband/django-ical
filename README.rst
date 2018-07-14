@@ -37,7 +37,6 @@ Requirements
     :alt: PyPI
     :target: https://pypi.org/project/django-ical/
 
-
 .. |docs| image:: https://readthedocs.org/projects/django-ical/badge/?version=latest
     :alt: Documentation Status
     :scale: 100%
