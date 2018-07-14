@@ -12,7 +12,7 @@ setup(
     author='Ian Lewis',
     author_email='IanMLewis@gmail.com',
     license='MIT License',
-    url='https://github.com/Pinkerton/django-ical',
+    url='https://github.com/jazzband/django-ical',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
