@@ -2,7 +2,7 @@
 django-ical
 ====================
 
-|docs| |build|
+|pypi| |docs| |build| |jazzband|
 
 django-ical is a simple library/framework for creating `ical
 <http://www.ietf.org/rfc/rfc2445.txt>`_ feeds based in Django's `syndication
@@ -32,10 +32,20 @@ Requirements
 * `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 3.1
 * `six <https://pypi.python.org/pypi/six>`_ is required for Django versions < 1.4.2
 
+
+.. |pypi| image:: https://img.shields.io/pypi/v/django-ical.svg
+    :alt: PyPI
+    :target: https://pypi.org/project/django-ical/
+
+
 .. |docs| image:: https://readthedocs.org/projects/django-ical/badge/?version=latest
     :alt: Documentation Status
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
     
-.. |build| image:: https://travis-ci.org/pinkerton/django-ical.svg?branch=master
-    :target: https://travis-ci.org/pinkerton/django-ical
+.. |build| image:: https://travis-ci.org/jazzband/django-ical.svg?branch=master
+    :target: https://travis-ci.org/jazzband/django-ical
+
+.. |jazzband| image:: https://jazzband.co/static/img/badge.svg
+   :target: https://jazzband.co/
+   :alt: Jazzband
