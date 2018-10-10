@@ -22,15 +22,14 @@ under the hood to generate iCalendar feeds.
 Docs
 ==============
 
-Docs are hosted on Read the Docs: 
+Docs are hosted on Read the Docs:
 http://django-ical.readthedocs.io/en/latest/
 
 Requirements
 ===================
 
-* `Django <http://www.djangoproject.com/>`_ >= 1.3.4
-* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 3.1
-* `six <https://pypi.python.org/pypi/six>`_ is required for Django versions < 1.4.2
+* `Django <http://www.djangoproject.com/>`_ >= 1.8
+* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 4.0.3
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/django-ical.svg
@@ -41,7 +40,7 @@ Requirements
     :alt: Documentation Status
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
-    
+
 .. |build| image:: https://travis-ci.org/jazzband/django-ical.svg?branch=master
     :target: https://travis-ci.org/jazzband/django-ical
 
