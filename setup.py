@@ -35,7 +35,7 @@ setup(
     ],
     install_requires=[
         'Django>=1.8',
-        'icalendar>=4.0',
+        'icalendar>=4.0.3',
     ],
     tests_require=[
         'django-recurrence',
