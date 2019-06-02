@@ -8,10 +8,11 @@ syntax: glob
 *.pyc
 *.swp
 *.egg-info
+.eggs
 .tox
 build
 temp
 dist
 
 syntax: regexp
-.*\#.*\#$ 
+.*\#.*\#$

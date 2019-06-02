@@ -7,13 +7,20 @@ from __future__ import unicode_literals
 
 # Standard Library
 import datetime
+import unittest
 
 # Django
 from django.test import TestCase
 
 # 3rd-party
+
+try:
+    import recurrence
+    _recurrence_unavailable = False
+except ImportError:
+    _recurrence_unavailable = True
+
 import pytz
-import recurrence
 from dateutil.rrule import DAILY
 from dateutil.rrule import MO
 from dateutil.rrule import MONTHLY
@@ -550,6 +557,7 @@ class FromDateutilRruleTests(TestCase):
         vRecur(vrecurr).to_ical().decode() == 'FREQ=MONTHLY;BYDAY=+1TU,-1TH;BYMONTH=1,3'
 
 
+@unittest.skipIf(_recurrence_unavailable, 'django-recurrence is not available')
 class FromDjangoRecurrenceRruleTests(TestCase):
     """Build an ical string from a django-recurrence rrule."""
 
