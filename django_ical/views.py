@@ -1,21 +1,15 @@
-#:coding=utf-8:
-
 """
 Views for generating ical feeds.
 """
 
 from datetime import datetime
 from calendar import timegm
+from inspect import signature
 
-import django
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.syndication.views import Feed
 from django.utils.http import http_date
-try:
-    from django.utils import six
-except ImportError:
-    import six
 
 from django_ical import feedgenerator
 
@@ -48,10 +42,6 @@ ICAL_EXTRA_FIELDS = [
     'exdate',           # exdate
     'status',           # CONFIRMED|TENTATIVE|CANCELLED
 ]
-
-# For Django <1.7
-if django.VERSION < (1, 7):
-    ICAL_EXTRA_FIELDS.append('updateddate')
 
 
 class ICalFeed(Feed):
@@ -115,17 +105,13 @@ class ICalFeed(Feed):
         except AttributeError:
             return default
         if callable(attr):
-            # Check co_argcount rather than try/excepting the function and
-            # catching the TypeError, because something inside the function
-            # may raise the TypeError. This technique is more accurate.
-            try:
-                code = six.get_function_code(attr)
-            except AttributeError:
-                code = six.get_function_code(attr.__call__)
-            if code.co_argcount == 2:       # one argument is 'self'
+            num_args = len(signature(attr).parameters)
+            if num_args == 0:
+                return attr()
+            elif num_args == 1:
                 return attr(obj)
             else:
-                return attr()
+                raise TypeError('Number of arguments to _get_dynamic_attr needs to be 0 or 1')
         return attr
 
     # NOTE: Not used by icalendar but required

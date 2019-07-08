@@ -1,19 +1,12 @@
-#:coding=utf-8:
-
-# Standard Library
 from datetime import date
 from datetime import datetime
 
-# Django
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-# 3rd-party
 import icalendar
 import pytz
-from six import b
 
-# Project
 from django_ical import utils
 from django_ical.feedgenerator import ICal20Feed
 from django_ical.views import ICalFeed
@@ -161,31 +154,30 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['SUMMARY'], 'Title1')
         self.assertEquals(calendar.subcomponents[0]['DESCRIPTION'], 'Description1')
         self.assertTrue(calendar.subcomponents[0]['URL'].endswith('/event/1'))
-        self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b('20120501T180000'))
-        self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b('20120501T200000'))
+        self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b'20120501T180000')
+        self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b'20120501T200000')
         self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
-        self.assertEquals(calendar.subcomponents[0]['LAST-MODIFIED'].to_ical(), b('20120502T100000Z'))
-        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(),
-                          b("MAILTO:john.doe@example.com"))
-        self.assertEquals(calendar.subcomponents[0]['RRULE'][0].to_ical(), b('FREQ=DAILY;BYHOUR=10'))
-        self.assertEquals(calendar.subcomponents[0]['RRULE'][1].to_ical(), b('FREQ=MONTHLY;BYMONTHDAY=4'))
-        self.assertEquals(calendar.subcomponents[0]['EXRULE'][0].to_ical(), b('FREQ=MONTHLY;BYMONTHDAY=-4'))
-        self.assertEquals(calendar.subcomponents[0]['EXRULE'][1].to_ical(), b('FREQ=MONTHLY;BYDAY=+3TU'))
-        self.assertEquals(calendar.subcomponents[0]['RDATE'].to_ical(), b('19990902,19980101'))
-        self.assertEquals(calendar.subcomponents[0]['EXDATE'].to_ical(), b('19990801,19980201'))
+        self.assertEquals(calendar.subcomponents[0]['LAST-MODIFIED'].to_ical(), b'20120502T100000Z')
+        self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), b'MAILTO:john.doe@example.com')
+        self.assertEquals(calendar.subcomponents[0]['RRULE'][0].to_ical(), b'FREQ=DAILY;BYHOUR=10')
+        self.assertEquals(calendar.subcomponents[0]['RRULE'][1].to_ical(), b'FREQ=MONTHLY;BYMONTHDAY=4')
+        self.assertEquals(calendar.subcomponents[0]['EXRULE'][0].to_ical(), b'FREQ=MONTHLY;BYMONTHDAY=-4')
+        self.assertEquals(calendar.subcomponents[0]['EXRULE'][1].to_ical(), b'FREQ=MONTHLY;BYDAY=+3TU')
+        self.assertEquals(calendar.subcomponents[0]['RDATE'].to_ical(), b'19990902,19980101')
+        self.assertEquals(calendar.subcomponents[0]['EXDATE'].to_ical(), b'19990801,19980201')
+
         self.assertEquals(calendar.subcomponents[1]['SUMMARY'], 'Title2')
         self.assertEquals(calendar.subcomponents[1]['DESCRIPTION'], 'Description2')
         self.assertTrue(calendar.subcomponents[1]['URL'].endswith('/event/2'))
-        self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b('20120506T180000'))
-        self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b('20120506T200000'))
-        self.assertEquals(calendar.subcomponents[1]['RRULE'].to_ical(), b('FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR'))
-        self.assertEquals(calendar.subcomponents[1]['EXRULE'].to_ical(), b('FREQ=MONTHLY;BYDAY=-3TU'))
-        self.assertEquals(calendar.subcomponents[1]['RDATE'].to_ical(), b('19970902'))
-        self.assertEquals(calendar.subcomponents[1]['EXDATE'].to_ical(), b('19970801'))
+        self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b'20120506T180000')
+        self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b'20120506T200000')
+        self.assertEquals(calendar.subcomponents[1]['RRULE'].to_ical(), b'FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR')
+        self.assertEquals(calendar.subcomponents[1]['EXRULE'].to_ical(), b'FREQ=MONTHLY;BYDAY=-3TU')
+        self.assertEquals(calendar.subcomponents[1]['RDATE'].to_ical(), b'19970902')
+        self.assertEquals(calendar.subcomponents[1]['EXDATE'].to_ical(), b'19970801')
         self.assertEquals(calendar.subcomponents[1]['GEO'].to_ical(), "37.386013;-122.082932")
-        self.assertEquals(calendar.subcomponents[1]['LAST-MODIFIED'].to_ical(), b('20120507T100000Z'))
-        self.assertEquals(calendar.subcomponents[1]['ORGANIZER'].to_ical(),
-                          b("MAILTO:john.doe@example.com"))
+        self.assertEquals(calendar.subcomponents[1]['LAST-MODIFIED'].to_ical(), b'20120507T100000Z')
+        self.assertEquals(calendar.subcomponents[1]['ORGANIZER'].to_ical(), b'MAILTO:john.doe@example.com')
 
     def test_wr_timezone(self):
         """
@@ -240,16 +232,16 @@ class ICal20FeedTest(TestCase):
         calendar = icalendar.Calendar.from_ical(response.content)
         self.assertEquals(len(calendar.subcomponents), 2)
 
-        self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b('20120501T180000'))
+        self.assertEquals(calendar.subcomponents[0]['DTSTART'].to_ical(), b'20120501T180000')
         self.assertEquals(calendar.subcomponents[0]['DTSTART'].params['TZID'], 'Asia/Tokyo')
 
-        self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b('20120501T200000'))
+        self.assertEquals(calendar.subcomponents[0]['DTEND'].to_ical(), b'20120501T200000')
         self.assertEquals(calendar.subcomponents[0]['DTEND'].params['TZID'], 'Asia/Tokyo')
 
-        self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b('20120506T180000'))
+        self.assertEquals(calendar.subcomponents[1]['DTSTART'].to_ical(), b'20120506T180000')
         self.assertEquals(calendar.subcomponents[1]['DTSTART'].params['TZID'], 'US/Eastern')
 
-        self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b('20120506T200000'))
+        self.assertEquals(calendar.subcomponents[1]['DTEND'].to_ical(), b'20120506T200000')
         self.assertEquals(calendar.subcomponents[1]['DTEND'].params['TZID'], 'US/Eastern')
 
     def test_file_name(self):
