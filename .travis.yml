@@ -2,12 +2,21 @@ language: python
 dist: xenial
 cache: pip
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-install:
-    - pip install tox
-    - pip install tox-travis
+  - 3.6
+  - 3.7
+env:
+  - DJANGO=1.11
+  - DJANGO=2.1
+  - DJANGO=2.2
+  - DJANGO=master
+matrix:
+  allow_failures:
+    - python: 3.6
+      env: DJANGO=master
+    - python: 3.7
+      env: DJANGO=master
+  fast_finish: true
+install: pip install tox tox-travis codecov
+after_success:
+  - codecov
 script: tox

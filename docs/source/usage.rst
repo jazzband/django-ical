@@ -2,16 +2,20 @@ The high-level framework
 ========================
 
 Overview
-------------------------
+--------
 
-The high level ical feed-generating is supplied by the :class:`ICalFeed
-<django_ical.views.ICalFeed>` class.  To create a feed, write a
-:class:`ICalFeed <django_ical.views.ICalFeed>` class and point to an instance
-of it in your `URLconf <https://docs.djangoproject.com/en/1.9/topics/http/urls/>`_.
+The high level iCal feed-generating is supplied by the
+:class:`ICalFeed <django_ical.views.ICalFeed>` class.
+To create a feed, write a :class:`ICalFeed <django_ical.views.ICalFeed>`
+class and point to an instance of it in your
+`URLconf <https://docs.djangoproject.com/en/1.9/topics/http/urls/>`_.
 
 With RSS feeds, the items in the feed represent articles or simple web pages.
 The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
 iCalendar calendar. Calendars contain items which are events.
+
+Example
+-------
 
 Let's look at a simple example. Here the item_start_datetime is a django-ical
 extension that supplies the start time of the event.
@@ -99,9 +103,8 @@ Note that in ``django_ical.utils`` are also convienience methods to build ``rrul
 scratch, from string (serialized iCal) and ``dateutil.rrule``.
 
 
-
 File Downloads
-------------------
+--------------
 
 The `file_name` parameter is an optional used as base name when generating the file. By
 default django-ical will not set the Content-Disposition header of the response. By setting
@@ -138,7 +141,7 @@ the file name to include the id of the object returned by `get_object()`.
         # ...
 
 Property Reference and Extensions
---------------------------------------
+---------------------------------
 
 django-ical adds a number of extensions to the base syndication framework in
 order to support iCalendar feeds and ignores many fields used in RSS feeds.
@@ -230,10 +233,9 @@ Here is a table of all of the fields that django-ical supports.
 +-----------------------+-----------------------+-----------------------------+
 
 
-Note:
-
-* django-ical does not use the ``link`` property required by the Django
-  syndication framework.
+.. note::
+   django-ical does not use the ``link`` property required by the Django
+   syndication framework.
 
 The low-level framework
 ========================

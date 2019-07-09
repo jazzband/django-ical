@@ -1,26 +1,9 @@
-# -*- coding: utf-8 -*-
 """Test calendar rrules."""
 
-# Future
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-# Standard Library
 import datetime
-import unittest
 
-# Django
 from django.test import TestCase
 
-# 3rd-party
-
-try:
-    import recurrence
-    _recurrence_unavailable = False
-except ImportError:
-    _recurrence_unavailable = True
-
-import pytz
 from dateutil.rrule import DAILY
 from dateutil.rrule import MO
 from dateutil.rrule import MONTHLY
@@ -30,8 +13,9 @@ from dateutil.rrule import WEEKLY
 from dateutil.rrule import YEARLY
 from dateutil.rrule import rrule
 from icalendar.prop import vRecur
+import pytz
+import recurrence
 
-# Project
 from django_ical import utils
 
 
@@ -557,7 +541,6 @@ class FromDateutilRruleTests(TestCase):
         vRecur(vrecurr).to_ical().decode() == 'FREQ=MONTHLY;BYDAY=+1TU,-1TH;BYMONTH=1,3'
 
 
-@unittest.skipIf(_recurrence_unavailable, 'django-recurrence is not available')
 class FromDjangoRecurrenceRruleTests(TestCase):
     """Build an ical string from a django-recurrence rrule."""
 

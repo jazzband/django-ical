@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
 """Utility functions to build calendar rules."""
 
-# Future
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-# 3rd party
 from icalendar.prop import vRecur
-
+from recurrence import serialize
 
 def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
                 byhour=None, byweekno=None, bymonthday=None, byyearday=None,
@@ -96,7 +90,6 @@ def build_rrule_from_recurrences_rrule(rule):
     https://pypi.org/project/django-recurrence/
     this is a shortcut to interface between recurrences and icalendar.
     """
-    from recurrence import serialize
     line = serialize(rule)
     if line.startswith('RRULE:'):
         line = line[6:]

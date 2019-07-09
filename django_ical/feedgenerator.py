@@ -1,5 +1,3 @@
-#:coding=utf-8:
-
 """
 iCalendar feed generation library -- used for generating
 iCalendar feeds.
@@ -9,14 +7,14 @@ Sample usage:
 >>> from django_ical import feedgenerator
 >>> from datetime import datetime
 >>> feed = feedgenerator.ICal20Feed(
-...     title=u"My Events",
-...     link=u"http://www.example.com/events.ical",
-...     description=u"A iCalendar feed of my events.",
-...     language=u"en",
+...     title="My Events",
+...     link="http://www.example.com/events.ical",
+...     description="A iCalendar feed of my events.",
+...     language="en",
 ... )
 >>> feed.add_item(
 ...     title="Hello",
-...     link=u"http://www.example.com/test/",
+...     link="http://www.example.com/test/",
 ...     description="Testing."
 ...     start_datetime=datetime(2012, 5, 6, 10, 00),
 ...     end_datetime=datetime(2012, 5, 6, 12, 00),
@@ -72,13 +70,13 @@ ITEM_EVENT_FIELD_MAP = (
 
 
 class ICal20Feed(SyndicationFeed):
-    u"""
+    """
     iCalendar 2.0 Feed implementation.
     """
     mime_type = 'text/calendar; charset=utf8'
 
     def write(self, outfile, encoding):
-        u"""
+        """
         Writes the feed to the specified file in the
         specified encoding.
         """

@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+1.6
+---
+
+- Drop support for old Python and Django versions.
+
 1.5
 ------
 
