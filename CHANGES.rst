@@ -1,10 +1,12 @@
 CHANGES
 =======
 
-1.6
----
+1.6a
+----
 
 - Drop support for old Python and Django versions.
+  This enables support for new Django versions
+  which do not have Python 2 compatibility shims.
 
 1.5
 ------
@@ -34,7 +36,7 @@ CHANGES
 1.2
 ------
 
-- Removed support for Django 1.2. It should still work, but it's not supported. 
+- Removed support for Django 1.2. It should still work, but it's not supported.
 - We now require icalendar 3.1.
 - Added support for the `GEO` field. *Thanks, null_radix!*
 
