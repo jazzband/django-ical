@@ -31,7 +31,7 @@ setup(
     install_requires=[
         'Django>=1.11',
         'icalendar>=4.0.3',
-        'django-recurrence',
+        'django-recurrence>=1.10.0',
     ],
     packages=find_packages(),
     test_suite='tests.main',
