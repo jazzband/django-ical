@@ -1,14 +1,14 @@
-====================
 django-ical
-====================
+===========
 
 |pypi| |docs| |build| |jazzband|
 
-django-ical is a simple library/framework for creating `ical
-<http://www.ietf.org/rfc/rfc2445.txt>`_ feeds based in Django's `syndication
-feed framework
-<https://docs.djangoproject.com/en/1.4/ref/contrib/syndication/>`_. This
-documentation is modeled after the documentation for the syndication feed
+django-ical is a simple library/framework for creating
+`iCal <http://www.ietf.org/rfc/rfc2445.txt>`_
+feeds based in Django's
+`syndication feed framework <https://docs.djangoproject.com/en/1.4/ref/contrib/syndication/>`_.
+
+This documentation is modeled after the documentation for the syndication feed
 framework so you can think of it as a simple extension.
 
 If you are familiar with the Django syndication feed framework you should be
@@ -19,14 +19,15 @@ support iCalendar feeds.
 django-ical uses the `icalendar <http://pypi.python.org/pypi/icalendar/>`_ library
 under the hood to generate iCalendar feeds.
 
-Docs
-==============
+Documentation
+-------------
 
-Docs are hosted on Read the Docs:
+Documentation is hosted on Read the Docs:
+
 http://django-ical.readthedocs.io/en/latest/
 
 Requirements
-===================
+------------
 
 * `Django <http://www.djangoproject.com/>`_ >= 1.8
 * `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 4.0.3
