@@ -4,7 +4,6 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-ical',
-    version='1.6',
     description="iCal feeds for Django based on Django's syndication feed framework.",
     long_description='\n'.join([
         open('README.rst', encoding='utf-8').read(),
