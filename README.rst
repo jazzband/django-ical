@@ -26,12 +26,6 @@ Documentation is hosted on Read the Docs:
 
 http://django-ical.readthedocs.io/en/latest/
 
-Requirements
-------------
-
-* `Django <http://www.djangoproject.com/>`_ >= 1.8
-* `icalendar <http://pypi.python.org/pypi/icalendar/>`_ >= 4.0.3
-
 
 .. |pypi| image:: https://img.shields.io/pypi/v/django-ical.svg
     :alt: PyPI
