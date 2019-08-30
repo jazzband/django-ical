@@ -3,8 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to django-ical!
-=======================
+
+django-ical documentation
+=========================
 
 django-ical is a simple library/framework for creating
 `ical <http://www.ietf.org/rfc/rfc2445.txt>`_
@@ -23,6 +24,7 @@ django-ical uses the
 `icalendar <http://pypi.python.org/pypi/icalendar/>`_
 library under the hood to generate iCalendar feeds.
 
+
 Contents
 ========
 
@@ -30,6 +32,8 @@ Contents
 
    usage
    reference/index
+   changelog
+
 
 Indices and tables
 ==================

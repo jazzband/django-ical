@@ -49,8 +49,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django-ical'
-copyright = u'2012, Ian Lewis'
+project = 'django-ical'
+copyright = '2012, Ian Lewis'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -192,8 +192,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'django-ical.tex', u'django-ical Documentation',
-   u'Ian Lewis', 'manual'),
+  ('index', 'django-ical.tex', 'django-ical Documentation',
+   'Ian Lewis', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -222,8 +222,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'django-ical', u'django-ical Documentation',
-     [u'Ian Lewis'], 1)
+    ('index', 'django-ical', 'django-ical Documentation',
+     ['Ian Lewis'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -236,8 +236,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'django-ical', u'django-ical Documentation',
-   u'Ian Lewis', 'django-ical', 'One line description of project.',
+  ('index', 'django-ical', 'django-ical Documentation',
+   'Ian Lewis', 'django-ical', 'One line description of project.',
    'Miscellaneous'),
 ]
 
