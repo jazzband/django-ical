@@ -3,6 +3,12 @@ Changes
 =======
 
 
+1.6.2 (2019-08-30)
+------------------
+
+- Language and documentation improvements.
+
+
 1.6.1 (2019-08-30)
 ------------------
 
