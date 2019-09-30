@@ -41,6 +41,7 @@ ICAL_EXTRA_FIELDS = [
     'rdate',            # rdate
     'exdate',           # exdate
     'status',           # CONFIRMED|TENTATIVE|CANCELLED
+    'attendee',         # list of attendees
 ]
 
 
@@ -68,6 +69,7 @@ class ICalFeed(Feed):
     :item_start_datetime: DTSTART
     :item_end_datetime: DTEND
     :item_transparency: TRANSP
+    :item_attendee: ATTENDEE
     """
     feed_type = feedgenerator.DefaultFeed
 
