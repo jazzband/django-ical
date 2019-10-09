@@ -41,6 +41,28 @@ class TestItemsFeed(ICalFeed):
             },
             'geolocation': (37.386013, -122.082932),
             'organizer': 'john.doe@example.com',
+            'participants': [
+                {
+                    'email': 'joe.unresponsive@example.com',
+                    'cn': 'Joe Unresponsive',
+                    'partstat': 'NEEDS-ACTION',
+                },
+                {
+                    'email': 'jane.attender@example.com',
+                    'cn': 'Jane Attender',
+                    'partstat': 'ACCEPTED',
+                },
+                {
+                    'email': 'dan.decliner@example.com',
+                    'cn': 'Dan Decliner',
+                    'partstat': 'DECLINED',
+                },
+                {
+                    'email': 'mary.maybe@example.com',
+                    'cn': 'Mary Maybe',
+                    'partstat': 'TENTATIVE',
+                },
+            ],
             'modified': datetime(2012, 5, 2, 10, 0),
         }, {
             'title': 'Title2',
@@ -111,6 +133,29 @@ class TestItemsFeed(ICalFeed):
                 organizer = icalendar.vCalAddress('MAILTO:%s' % organizer_dic)
             return organizer
 
+    def item_attendee(self, obj):
+        """ All calendars support ATTENDEE attribute, however, at this time, Apple calendar (desktop & iOS) and Outlook
+        display event attendees, while Google does not. For SUBSCRIBED calendars it seems that it is not possible to
+        use the default method to respond. As an alternative, you may review adding custom links to your description
+        or setting up something like CalDav with authentication, which can enable the ability for attendees to respond
+        via the default icalendar protocol."""
+        participants = obj.get('participants', None)
+        if participants:
+            attendee_list = list()
+            default_attendee_params = {
+                'cutype': icalendar.vText('INDIVIDUAL'),
+                'role': icalendar.vText('REQ-PARTICIPANT'),
+                'rsvp': icalendar.vText('TRUE'),  # Does not seem to work for subscribed calendars.
+            }
+            for participant in participants:
+                attendee = icalendar.vCalAddress('MAILTO:%s' % participant.pop('email'))
+                participant_dic = default_attendee_params.copy()
+                participant_dic.update(participant)
+                for key, val in participant_dic.items():
+                    attendee.params[key] = icalendar.vText(val)
+                attendee_list.append(attendee)
+            return attendee_list
+
 
 class TestFilenameFeed(ICalFeed):
     feed_type = ICal20Feed
@@ -159,6 +204,19 @@ class ICal20FeedTest(TestCase):
         self.assertEquals(calendar.subcomponents[0]['GEO'].to_ical(), "37.386013;-122.082932")
         self.assertEquals(calendar.subcomponents[0]['LAST-MODIFIED'].to_ical(), b'20120502T100000Z')
         self.assertEquals(calendar.subcomponents[0]['ORGANIZER'].to_ical(), b'MAILTO:john.doe@example.com')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][0].to_ical(), b'MAILTO:joe.unresponsive@example.com')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][0].params.to_ical(),
+                          b'CN="Joe Unresponsive";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;'
+                          b'RSVP=TRUE')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][1].to_ical(), b'MAILTO:jane.attender@example.com')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][1].params.to_ical(),
+                          b'CN="Jane Attender";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;RSVP=TRUE')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][2].to_ical(), b'MAILTO:dan.decliner@example.com')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][2].params.to_ical(),
+                          b'CN="Dan Decliner";CUTYPE=INDIVIDUAL;PARTSTAT=DECLINED;ROLE=REQ-PARTICIPANT;RSVP=TRUE')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][3].to_ical(), b'MAILTO:mary.maybe@example.com')
+        self.assertEquals(calendar.subcomponents[0]['ATTENDEE'][3].params.to_ical(),
+                          b'CN="Mary Maybe";CUTYPE=INDIVIDUAL;PARTSTAT=TENTATIVE;ROLE=REQ-PARTICIPANT;RSVP=TRUE')
         self.assertEquals(calendar.subcomponents[0]['RRULE'][0].to_ical(), b'FREQ=DAILY;BYHOUR=10')
         self.assertEquals(calendar.subcomponents[0]['RRULE'][1].to_ical(), b'FREQ=MONTHLY;BYMONTHDAY=4')
         self.assertEquals(calendar.subcomponents[0]['EXRULE'][0].to_ical(), b'FREQ=MONTHLY;BYMONTHDAY=-4')

@@ -66,6 +66,7 @@ ITEM_EVENT_FIELD_MAP = (
     ('rdate',               'rdate'),
     ('exdate',              'exdate'),
     ('status',              'status'),
+    ('attendee',            'attendee'),
 )
 
 
@@ -105,7 +106,11 @@ class ICal20Feed(SyndicationFeed):
             for ifield, efield in ITEM_EVENT_FIELD_MAP:
                 val = item.get(ifield)
                 if val is not None:
-                    event.add(efield, val)
+                    if ifield == 'attendee':
+                        for list_item in val:
+                            event.add(efield, list_item)
+                    else:
+                        event.add(efield, val)
             calendar.add_component(event)
 
 DefaultFeed = ICal20Feed
