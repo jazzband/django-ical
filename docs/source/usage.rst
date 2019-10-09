@@ -208,6 +208,13 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | or tests to know how to     |
 |                       |                       | build them.                 |
 +-----------------------+-----------------------+-----------------------------+
+| item_attendee         | `ATTENDEE `_          | The event attendees.        |
+|                       |                       | Expected to be a list of    |
+|                       |                       | vCalAddress objects. See    |
+|                       |                       | `iCalendar`_ documentation  |
+|                       |                       | or tests to know how to     |
+|                       |                       | build them.                 |
++-----------------------+-----------------------+-----------------------------+
 | item_rrule            | `RRULE`_              | The recurrence rule for     |
 |                       |                       | repeating events.           |
 |                       |                       | See `iCalendar`_            |
