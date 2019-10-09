@@ -14,6 +14,7 @@ syntax: glob
 build
 temp
 dist
+.coverage
 
 syntax: regexp
 .*\#.*\#$
