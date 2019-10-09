@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+from os import linesep
 
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -310,3 +311,17 @@ class ICal20FeedTest(TestCase):
 
         self.assertIn('Content-Disposition', response)
         self.assertEqual(response['content-disposition'], 'attachment; filename="123.ics"')
+
+    def test_file_type(self):
+        request = RequestFactory().get("/test/ical")
+        view = TestFilenameFeed()
+        response = view(request)
+        self.assertIn('Content-Type', response)
+        self.assertEqual(response['content-type'], 'text/calendar, text/x-vcalendar, application/hbs-vcs')
+
+    def test_file_header(self):
+        request = RequestFactory().get("/test/ical")
+        view = TestFilenameFeed()
+        response = view(request)
+        header = b'BEGIN:VCALENDAR\r\nVERSION:2.0'
+        self.assertTrue(response.content.startswith(header))
