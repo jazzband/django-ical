@@ -13,35 +13,29 @@ from django.utils.http import http_date
 
 from django_ical import feedgenerator
 
-__all__ = (
-    'ICalFeed',
-)
+__all__ = ("ICalFeed",)
 
 # Extra fields added to the Feed object
 # to support ical
-FEED_EXTRA_FIELDS = (
-    'method',
-    'product_id',
-    'timezone',
-)
+FEED_EXTRA_FIELDS = ("method", "product_id", "timezone")
 
 # Extra fields added to items (events) to
 # support ical
 ICAL_EXTRA_FIELDS = [
-    'timestamp',        # dtstamp
-    'created',          # created
-    'start_datetime',   # dtstart
-    'end_datetime',     # dtend
-    'transparency',     # transp
-    'location',         # location
-    'geolocation',      # latitude;longitude
-    'organizer',        # email, cn, and role
-    'rrule',            # rrule
-    'exrule',           # exrule
-    'rdate',            # rdate
-    'exdate',           # exdate
-    'status',           # CONFIRMED|TENTATIVE|CANCELLED
-    'attendee',         # list of attendees
+    "timestamp",  # dtstamp
+    "created",  # created
+    "start_datetime",  # dtstart
+    "end_datetime",  # dtend
+    "transparency",  # transp
+    "location",  # location
+    "geolocation",  # latitude;longitude
+    "organizer",  # email, cn, and role
+    "rrule",  # rrule
+    "exrule",  # exrule
+    "rdate",  # rdate
+    "exdate",  # exdate
+    "status",  # CONFIRMED|TENTATIVE|CANCELLED
+    "attendee",  # list of attendees
 ]
 
 
@@ -71,6 +65,7 @@ class ICalFeed(Feed):
     :item_transparency: TRANSP
     :item_attendee: ATTENDEE
     """
+
     feed_type = feedgenerator.DefaultFeed
 
     def __call__(self, request, *args, **kwargs):
@@ -82,19 +77,22 @@ class ICalFeed(Feed):
         try:
             obj = self.get_object(request, *args, **kwargs)
         except ObjectDoesNotExist:
-            raise Http404('Feed object does not exist.')
+            raise Http404("Feed object does not exist.")
         feedgen = self.get_feed(obj, request)
-        response = HttpResponse(content_type='text/calendar, text/x-vcalendar, application/hbs-vcs')
-        if hasattr(self, 'item_pubdate') or hasattr(self, 'item_updateddate'):
+        response = HttpResponse(
+            content_type="text/calendar, text/x-vcalendar, application/hbs-vcs"
+        )
+        if hasattr(self, "item_pubdate") or hasattr(self, "item_updateddate"):
             # if item_pubdate or item_updateddate is defined for the feed, set
             # header so as ConditionalGetMiddleware is able to send 304 NOT MODIFIED
-            response['Last-Modified'] = http_date(
-                timegm(feedgen.latest_post_date().utctimetuple()))
-        feedgen.write(response, 'utf-8')
+            response["Last-Modified"] = http_date(
+                timegm(feedgen.latest_post_date().utctimetuple())
+            )
+        feedgen.write(response, "utf-8")
 
-        filename = self._get_dynamic_attr('file_name', obj)
+        filename = self._get_dynamic_attr("file_name", obj)
         if filename:
-            response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+            response["Content-Disposition"] = 'attachment; filename="%s"' % filename
 
         return response
 
@@ -110,18 +108,20 @@ class ICalFeed(Feed):
             num_args = len(signature(attr).parameters)
             if num_args == 0:
                 return attr()
-            elif num_args == 1:
+            if num_args == 1:
                 return attr(obj)
-            else:
-                raise TypeError('Number of arguments to _get_dynamic_attr needs to be 0 or 1')
+
+            raise TypeError(
+                "Number of arguments to _get_dynamic_attr needs to be 0 or 1"
+            )
         return attr
 
     # NOTE: Not used by icalendar but required
     #       by the Django syndication framework.
-    link = ''
+    link = ""
 
-    def method(self, obj):
-        return 'PUBLISH'
+    def method(self, obj):  # pylint: disable=unused-argument
+        return "PUBLISH"
 
     def feed_extra_kwargs(self, obj):
         kwargs = {}
@@ -131,13 +131,13 @@ class ICalFeed(Feed):
                 kwargs[field] = val
         return kwargs
 
-    def item_timestamp(self, obj):
+    def item_timestamp(self, obj):  # pylint: disable=unused-argument
         return datetime.now()
 
-    def item_extra_kwargs(self, obj):
+    def item_extra_kwargs(self, item):
         kwargs = {}
         for field in ICAL_EXTRA_FIELDS:
-            val = self._get_dynamic_attr('item_' + field, obj)
+            val = self._get_dynamic_attr("item_" + field, item)
             if val:
                 kwargs[field] = val
         return kwargs

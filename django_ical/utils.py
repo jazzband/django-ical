@@ -3,10 +3,23 @@
 from icalendar.prop import vRecur
 from recurrence import serialize
 
-def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
-                byhour=None, byweekno=None, bymonthday=None, byyearday=None,
-                bymonth=None, until=None, bysetpos=None, wkst=None, byday=None,
-                freq=None):
+
+def build_rrule(  # noqa
+    count=None,
+    interval=None,
+    bysecond=None,
+    byminute=None,
+    byhour=None,
+    byweekno=None,
+    bymonthday=None,
+    byyearday=None,
+    bymonth=None,
+    until=None,
+    bysetpos=None,
+    wkst=None,
+    byday=None,
+    freq=None,
+):
     """
     Build rrule dictionary for vRecur class.
 
@@ -29,49 +42,50 @@ def build_rrule(count=None, interval=None, bysecond=None, byminute=None,
     result = {}
 
     if count is not None:
-        result['COUNT'] = count
+        result["COUNT"] = count
 
     if interval is not None:
-        result['INTERVAL'] = interval
+        result["INTERVAL"] = interval
 
     if bysecond is not None:
-        result['BYSECOND'] = bysecond
+        result["BYSECOND"] = bysecond
 
     if byminute is not None:
-        result['BYMINUTE'] = byminute
+        result["BYMINUTE"] = byminute
 
     if byhour is not None:
-        result['BYHOUR'] = byhour
+        result["BYHOUR"] = byhour
 
     if byweekno is not None:
-        result['BYWEEKNO'] = byweekno
+        result["BYWEEKNO"] = byweekno
 
     if bymonthday is not None:
-        result['BYMONTHDAY'] = bymonthday
+        result["BYMONTHDAY"] = bymonthday
 
     if byyearday is not None:
-        result['BYYEARDAY'] = byyearday
+        result["BYYEARDAY"] = byyearday
 
     if bymonth is not None:
-        result['BYMONTH'] = bymonth
+        result["BYMONTH"] = bymonth
 
     if until is not None:
-        result['UNTIL'] = until
+        result["UNTIL"] = until
 
     if bysetpos is not None:
-        result['BYSETPOS'] = bysetpos
+        result["BYSETPOS"] = bysetpos
 
     if wkst is not None:
-        result['WKST'] = wkst
+        result["WKST"] = wkst
 
     if byday is not None:
-        result['BYDAY'] = byday
+        result["BYDAY"] = byday
 
     if freq is not None:
         if freq not in vRecur.frequencies:
-            raise ValueError('Frequency value should be one of: {0}'
-                             .format(vRecur.frequencies))
-        result['FREQ'] = freq
+            raise ValueError(
+                "Frequency value should be one of: {0}".format(vRecur.frequencies)
+            )
+        result["FREQ"] = freq
 
     return result
 
@@ -91,7 +105,7 @@ def build_rrule_from_recurrences_rrule(rule):
     this is a shortcut to interface between recurrences and icalendar.
     """
     line = serialize(rule)
-    if line.startswith('RRULE:'):
+    if line.startswith("RRULE:"):
         line = line[6:]
     return build_rrule_from_text(line)
 
@@ -106,8 +120,8 @@ def build_rrule_from_dateutil_rrule(rule):
     """
     lines = str(rule).splitlines()
     for line in lines:
-        if line.startswith('DTSTART:'):
+        if line.startswith("DTSTART:"):
             continue
-        if line.startswith('RRULE:'):
+        if line.startswith("RRULE:"):
             line = line[6:]
         return build_rrule_from_text(line)

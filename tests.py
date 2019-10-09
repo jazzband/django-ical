@@ -12,34 +12,30 @@ def main():
     os.environ["DJANGO_SETTINGS_MODULE"] = "django.conf.global_settings"
     from django.conf import global_settings
 
-    global_settings.SECRET_KEY = 'snakeoil'
-    global_settings.TIME_ZONE = 'UTC'
+    global_settings.SECRET_KEY = "snakeoil"
+    global_settings.TIME_ZONE = "UTC"
 
-    global_settings.INSTALLED_APPS = (
-        'django.contrib.contenttypes',
-        'django_ical',
-    )
+    global_settings.INSTALLED_APPS = ("django.contrib.contenttypes", "django_ical")
     global_settings.DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': ':memory:',
-        }
+        "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
     }
 
     global_settings.MIDDLEWARE_CLASSES = (
-        'django.middleware.common.CommonMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
+        "django.middleware.common.CommonMiddleware",
+        "django.contrib.sessions.middleware.SessionMiddleware",
     )
 
     if django.VERSION > (1, 7):
         django.setup()
 
     from django.test.utils import get_runner
+
     test_runner = get_runner(global_settings)
 
     test_runner = test_runner()
-    failures = test_runner.run_tests(['django_ical'])
+    failures = test_runner.run_tests(["django_ical"])
     sys.exit(failures)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

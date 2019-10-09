@@ -31,42 +31,42 @@ from icalendar import Calendar, Event
 
 from django.utils.feedgenerator import SyndicationFeed
 
-__all__ = (
-    'ICal20Feed',
-    'DefaultFeed',
-)
+__all__ = ("ICal20Feed", "DefaultFeed")
 
 FEED_FIELD_MAP = (
-    ('product_id',          'prodid'),
-    ('method',              'method'),
-    ('title',               'x-wr-calname'),
-    ('description',         'x-wr-caldesc'),
-    ('timezone',            'x-wr-timezone'),
-    ('ttl',                 'x-published-ttl'), # See format here: http://www.rfc-editor.org/rfc/rfc2445.txt (sec 4.3.6)
+    ("product_id", "prodid"),
+    ("method", "method"),
+    ("title", "x-wr-calname"),
+    ("description", "x-wr-caldesc"),
+    ("timezone", "x-wr-timezone"),
+    (
+        "ttl",
+        "x-published-ttl",
+    ),  # See format here: http://www.rfc-editor.org/rfc/rfc2445.txt (sec 4.3.6)
 )
 
 ITEM_EVENT_FIELD_MAP = (
     # 'item_guid' becomes 'unique_id' when passed to the SyndicationFeed
-    ('unique_id',           'uid'),
-    ('title',               'summary'),
-    ('description',         'description'),
-    ('start_datetime',      'dtstart'),
-    ('end_datetime',        'dtend'),
-    ('updateddate',         'last-modified'),
-    ('created',             'created'),
-    ('timestamp',           'dtstamp'),
-    ('transparency',        'transp'),
-    ('location',            'location'),
-    ('geolocation',         'geo'),
-    ('link',                'url'),
-    ('organizer',           'organizer'),
-    ('categories',          'categories'),
-    ('rrule',               'rrule'),
-    ('exrule',              'exrule'),
-    ('rdate',               'rdate'),
-    ('exdate',              'exdate'),
-    ('status',              'status'),
-    ('attendee',            'attendee'),
+    ("unique_id", "uid"),
+    ("title", "summary"),
+    ("description", "description"),
+    ("start_datetime", "dtstart"),
+    ("end_datetime", "dtend"),
+    ("updateddate", "last-modified"),
+    ("created", "created"),
+    ("timestamp", "dtstamp"),
+    ("transparency", "transp"),
+    ("location", "location"),
+    ("geolocation", "geo"),
+    ("link", "url"),
+    ("organizer", "organizer"),
+    ("categories", "categories"),
+    ("rrule", "rrule"),
+    ("exrule", "exrule"),
+    ("rdate", "rdate"),
+    ("exdate", "exdate"),
+    ("status", "status"),
+    ("attendee", "attendee"),
 )
 
 
@@ -74,7 +74,8 @@ class ICal20Feed(SyndicationFeed):
     """
     iCalendar 2.0 Feed implementation.
     """
-    mime_type = 'text/calendar; charset=utf8'
+
+    mime_type = "text/calendar; charset=utf8"
 
     def write(self, outfile, encoding):
         """
@@ -82,8 +83,8 @@ class ICal20Feed(SyndicationFeed):
         specified encoding.
         """
         cal = Calendar()
-        cal.add('version', '2.0')
-        cal.add('calscale', 'GREGORIAN')
+        cal.add("version", "2.0")
+        cal.add("calscale", "GREGORIAN")
 
         for ifield, efield in FEED_FIELD_MAP:
             val = self.feed.get(ifield)
@@ -92,7 +93,7 @@ class ICal20Feed(SyndicationFeed):
 
         self.write_items(cal)
 
-        to_ical = getattr(cal, 'as_string', None)
+        to_ical = getattr(cal, "as_string", None)
         if not to_ical:
             to_ical = cal.to_ical
         outfile.write(to_ical())
@@ -106,11 +107,12 @@ class ICal20Feed(SyndicationFeed):
             for ifield, efield in ITEM_EVENT_FIELD_MAP:
                 val = item.get(ifield)
                 if val is not None:
-                    if ifield == 'attendee':
+                    if ifield == "attendee":
                         for list_item in val:
                             event.add(efield, list_item)
                     else:
                         event.add(efield, val)
             calendar.add_component(event)
+
 
 DefaultFeed = ICal20Feed
