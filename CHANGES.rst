@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.7.0 (2019-10-09)
+------------------
+
+- Add calendar MIME types for feeds. [xkill]
+- Add attendees for calendar events. [webaholik]
+
+
 1.6.2 (2019-08-30)
 ------------------
 
