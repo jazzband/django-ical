@@ -6,7 +6,7 @@ django-ical
 django-ical is a simple library/framework for creating
 `iCal <http://www.ietf.org/rfc/rfc2445.txt>`_
 feeds based in Django's
-`syndication feed framework <https://docs.djangoproject.com/en/1.4/ref/contrib/syndication/>`_.
+`syndication feed framework <https://docs.djangoproject.com/en/3.0/ref/contrib/syndication/>`_.
 
 This documentation is modeled after the documentation for the syndication feed
 framework so you can think of it as a simple extension.
