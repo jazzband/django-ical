@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.7.1 (2020-05-09)
+------------------
+
+- Drop support for Django 1.11 LTS. [aleksihakli]
+- Fix string comparison in tests. [aleksihakli]
+
+
 1.7.0 (2019-10-09)
 ------------------
 
