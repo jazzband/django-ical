@@ -139,7 +139,7 @@ class TestItemsFeed(ICalFeed):
             if isinstance(organizer_dic, dict):
                 organizer = icalendar.vCalAddress("MAILTO:%s" % organizer_dic["email"])
                 for key, val in organizer_dic.items():
-                    if key is not "email":
+                    if key != "email":
                         organizer.params[key] = icalendar.vText(val)
             else:
                 organizer = icalendar.vCalAddress("MAILTO:%s" % organizer_dic)
