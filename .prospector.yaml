@@ -1,0 +1,10 @@
+ignore-paths:
+  - docs
+
+pep8:
+  options:
+    max-line-length: 142
+
+pylint:
+  disable:
+    - import-error
