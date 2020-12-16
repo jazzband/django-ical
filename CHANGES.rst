@@ -3,6 +3,12 @@ Changes
 =======
 
 
+1.7.2 (2020-12-16)
+------------------
+
+- Add support for Python 3.9. [aleksihakli]
+- Add support for Django 3.1. [aleksihakli]
+- Add tox QA with black and prospector. [aleksihakli]
 1.7.1 (2020-05-09)
 ------------------
 
