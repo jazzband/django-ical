@@ -77,7 +77,7 @@ class ICal20Feed(SyndicationFeed):
 
     mime_type = "text/calendar; charset=utf8"
 
-    def write(self, outfile, encoding):
+    def write(self, outfile, encoding):  # pylint: disable=unused-argument
         """
         Writes the feed to the specified file in the
         specified encoding.
