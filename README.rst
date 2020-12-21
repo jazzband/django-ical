@@ -1,7 +1,7 @@
 django-ical
 ===========
 
-|pypi| |docs| |build| |jazzband|
+|pypi| |docs| |build| |coverage| |jazzband|
 
 django-ical is a simple library/framework for creating
 `iCal <http://www.ietf.org/rfc/rfc2445.txt>`_
@@ -24,7 +24,7 @@ Documentation
 
 Documentation is hosted on Read the Docs:
 
-http://django-ical.readthedocs.io/en/latest/
+https://django-ical.readthedocs.io/en/latest/
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/django-ical.svg
@@ -36,8 +36,13 @@ http://django-ical.readthedocs.io/en/latest/
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
 
-.. |build| image:: https://travis-ci.org/jazzband/django-ical.svg?branch=master
-    :target: https://travis-ci.org/jazzband/django-ical
+.. |build| image:: https://github.com/jazzband/django-ical/workflows/Test/badge.svg
+   :target: https://github.com/jazzband/django-ical/actions
+   :alt: GitHub Actions
+
+.. |coverage| image:: https://codecov.io/gh/jazzband/django-ical/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/jazzband/django-ical
+   :alt: Coverage
 
 .. |jazzband| image:: https://jazzband.co/static/img/badge.svg
    :target: https://jazzband.co/

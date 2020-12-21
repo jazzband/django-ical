@@ -146,7 +146,7 @@ class TestItemsFeed(ICalFeed):
             return organizer
 
     def item_attendee(self, obj):
-        """ All calendars support ATTENDEE attribute, however, at this time, Apple calendar (desktop & iOS) and Outlook
+        """All calendars support ATTENDEE attribute, however, at this time, Apple calendar (desktop & iOS) and Outlook
         display event attendees, while Google does not. For SUBSCRIBED calendars it seems that it is not possible to
         use the default method to respond. As an alternative, you may review adding custom links to your description
         or setting up something like CalDav with authentication, which can enable the ability for attendees to respond
