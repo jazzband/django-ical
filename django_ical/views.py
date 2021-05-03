@@ -78,10 +78,10 @@ class ICalFeed(Feed):
             obj = self.get_object(request, *args, **kwargs)
         except ObjectDoesNotExist:
             raise Http404("Feed object does not exist.")
+
         feedgen = self.get_feed(obj, request)
-        response = HttpResponse(
-            content_type="text/calendar, text/x-vcalendar, application/hbs-vcs"
-        )
+        response = HttpResponse(content_type=feedgen.mime_type)
+
         if hasattr(self, "item_pubdate") or hasattr(self, "item_updateddate"):
             # if item_pubdate or item_updateddate is defined for the feed, set
             # header so as ConditionalGetMiddleware is able to send 304 NOT MODIFIED
