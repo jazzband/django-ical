@@ -3,6 +3,15 @@ Changes
 =======
 
 
+1.7.3 (2021-05-03)
+------------------
+
+- Fix calendar ``Content-Type`` headers.
+  Previous configuration included multiple comma separated values
+  in the header, which is incompatible with the HTTP header specification.
+  [aleksihakli]
+
+
 1.7.2 (2020-12-16)
 ------------------
 
