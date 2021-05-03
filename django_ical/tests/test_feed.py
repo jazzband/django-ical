@@ -413,7 +413,7 @@ class ICal20FeedTest(TestCase):
         self.assertIn("Content-Type", response)
         self.assertEqual(
             response["content-type"],
-            "text/calendar, text/x-vcalendar, application/hbs-vcs",
+            "text/calendar; charset=utf8",
         )
 
     def test_file_header(self):
