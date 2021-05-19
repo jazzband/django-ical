@@ -234,6 +234,12 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | documentation or tests to   |
 |                       |                       | know how to build them.     |
 +-----------------------+-----------------------+-----------------------------+
+| item_valarm           | `VALARM`_             | Alarms for the event, must  |
+|                       |                       | be a list of Alarm objects. |
+|                       |                       | See `iCalendar`_            |
+|                       |                       | documentation or tests to   |
+|                       |                       | know how to build them.     |
++-----------------------+-----------------------+-----------------------------+
 | item_status           | `STATUS`_             | The status of an event.     |
 |                       |                       | Can be CONFIRMED, CANCELLED |
 |                       |                       | or TENTATIVE.               |
@@ -278,6 +284,7 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _RDATE: https://www.kanzaki.com/docs/ical/rdate.html
 .. _EXDATE: https://www.kanzaki.com/docs/ical/exdate.html
 .. _STATUS: https://www.kanzaki.com/docs/ical/status.html
+.. _VALARM: https://www.kanzaki.com/docs/ical/valarm.html
 .. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
