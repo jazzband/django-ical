@@ -208,7 +208,7 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | or tests to know how to     |
 |                       |                       | build them.                 |
 +-----------------------+-----------------------+-----------------------------+
-| item_attendee         | `ATTENDEE `_          | The event attendees.        |
+| item_attendee         | `ATTENDEE`_           | The event attendees.        |
 |                       |                       | Expected to be a list of    |
 |                       |                       | vCalAddress objects. See    |
 |                       |                       | `iCalendar`_ documentation  |
@@ -272,6 +272,7 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _TRANSP: http://www.kanzaki.com/docs/ical/transp.html
 .. _URL: http://www.kanzaki.com/docs/ical/url.html
 .. _ORGANIZER: http://www.kanzaki.com/docs/ical/organizer.html
+.. _ATTENDEE: https://www.kanzaki.com/docs/ical/attendee.html
 .. _RRULE: https://www.kanzaki.com/docs/ical/rrule.html
 .. _EXRULE: https://www.kanzaki.com/docs/ical/exrule.html
 .. _RDATE: https://www.kanzaki.com/docs/ical/rdate.html
