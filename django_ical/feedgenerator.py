@@ -67,6 +67,7 @@ ITEM_EVENT_FIELD_MAP = (
     ("exdate", "exdate"),
     ("status", "status"),
     ("attendee", "attendee"),
+    ("valarm", None),
 )
 
 
@@ -110,6 +111,9 @@ class ICal20Feed(SyndicationFeed):
                     if ifield == "attendee":
                         for list_item in val:
                             event.add(efield, list_item)
+                    elif ifield == "valarm":
+                        for list_item in val:
+                            event.add_component(list_item)
                     else:
                         event.add(efield, val)
             calendar.add_component(event)

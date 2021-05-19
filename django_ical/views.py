@@ -36,6 +36,7 @@ ICAL_EXTRA_FIELDS = [
     "exdate",  # exdate
     "status",  # CONFIRMED|TENTATIVE|CANCELLED
     "attendee",  # list of attendees
+    "valarm",  # list of icalendar.Alarm objects
 ]
 
 
@@ -64,6 +65,7 @@ class ICalFeed(Feed):
     :item_end_datetime: DTEND
     :item_transparency: TRANSP
     :item_attendee: ATTENDEE
+    :item_valarm: VALARM
     """
 
     feed_type = feedgenerator.DefaultFeed

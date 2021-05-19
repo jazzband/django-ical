@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
 from os import linesep
 
 from django.test import TestCase
@@ -94,6 +95,18 @@ class TestItemsFeed(ICalFeed):
                     "email": "john.doe@example.com",
                     "role": "CHAIR",
                 },
+                "alarms": [
+                    {
+                        "trigger": timedelta(minutes=-30),
+                        "action": "DISPLAY",
+                        "description": "Alarm2a",
+                    },
+                    {
+                        "trigger": timedelta(days=-1),
+                        "action": "DISPLAY",
+                        "description": "Alarm2b",
+                    },
+                ],
             },
         ]
 
@@ -169,6 +182,17 @@ class TestItemsFeed(ICalFeed):
                     attendee.params[key] = icalendar.vText(val)
                 attendee_list.append(attendee)
             return attendee_list
+
+    def item_valarm(self, obj):
+        alarms = obj.get("alarms", None)
+        if alarms:
+            alarm_list = list()
+            for alarm in alarms:
+                valarm = icalendar.Alarm()
+                for key, value in alarm.items():
+                    valarm.add(key, value)
+                alarm_list.append(valarm)
+            return alarm_list
 
 
 class TestFilenameFeed(ICalFeed):
@@ -308,6 +332,14 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(
             calendar.subcomponents[1]["ORGANIZER"].to_ical(),
             b"MAILTO:john.doe@example.com",
+        )
+        self.assertIn(
+            b"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm2a\r\nTRIGGER:-PT30M\r\nEND:VALARM\r\n",
+            [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
+        )
+        self.assertIn(
+            b"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm2b\r\nTRIGGER:-P1D\r\nEND:VALARM\r\n",
+            [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
         )
 
     def test_wr_timezone(self):
