@@ -140,6 +140,26 @@ the file name to include the id of the object returned by `get_object()`.
 
         # ...
 
+
+Alarms
+------
+
+Alarms must be `icalendar.Alarm` objects, a list is expected as the return value for
+`item_valarm`.
+
+.. code-block:: python
+
+    from icalendar import Alarm
+    from datetime import timedelta
+    
+    def item_valarm(self, item):
+        valarm = Alarm()
+        valarm.add('action', 'display')
+        valarm.add('description', 'Your message text')
+        valarm.add('trigger', timedelta(days=-1))
+        return [valarm]
+
+
 Property Reference and Extensions
 ---------------------------------
 
