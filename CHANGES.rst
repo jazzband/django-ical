@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.8.0 (2021-05-21)
+------------------
+
+- Add ``VALARM`` support and documentation.
+  [malteger]
+
+
 1.7.3 (2021-05-03)
 ------------------
 
