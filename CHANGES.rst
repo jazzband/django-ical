@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.8.1 (2022-01-08)
+------------------
+
+- Drop Python 3.6 support and add Python 3.10 support.
+  [aleksihakli]
+
+
 1.8.0 (2021-05-21)
 ------------------
 
