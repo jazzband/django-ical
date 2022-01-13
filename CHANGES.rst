@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.8.2 (2022-01-13)
+------------------
+
+- Deprecate universal Python 2 wheels.
+  [aleksihakli]
+
+
 1.8.1 (2022-01-08)
 ------------------
 
