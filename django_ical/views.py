@@ -94,7 +94,7 @@ class ICalFeed(Feed):
 
         filename = self._get_dynamic_attr("file_name", obj)
         if filename:
-            response["Content-Disposition"] = 'attachment; filename="%s"' % filename
+            response["Content-Disposition"] = f'attachment; filename="{filename}"'
 
         return response
 

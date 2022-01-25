@@ -82,9 +82,7 @@ def build_rrule(  # noqa
 
     if freq is not None:
         if freq not in vRecur.frequencies:
-            raise ValueError(
-                "Frequency value should be one of: {0}".format(vRecur.frequencies)
-            )
+            raise ValueError(f"Frequency value should be one of: {vRecur.frequencies}")
         result["FREQ"] = freq
 
     return result
