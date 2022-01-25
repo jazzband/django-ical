@@ -6,8 +6,8 @@ from os import linesep
 from django.test import TestCase
 from django.test.client import RequestFactory
 
+from dateutil import tz
 import icalendar
-import pytz
 
 from django_ical import utils
 from django_ical.feedgenerator import ICal20Feed
@@ -358,8 +358,10 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(calendar["X-WR-TIMEZONE"], "Asia/Tokyo")
 
     def test_timezone(self):
-        tokyo = pytz.timezone("Asia/Tokyo")
-        us_eastern = pytz.timezone("US/Eastern")
+        tokyo = tz.gettz("Asia/Tokyo")  # also known as JST or Japan Standard Time
+        us_eastern = tz.gettz(
+            "US/Eastern"
+        )  # also known as EDT or Eastern (Daylight) Time
 
         class TestTimezoneFeed(TestItemsFeed):
             def items(self):
@@ -402,30 +404,22 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(
             calendar.subcomponents[0]["DTSTART"].to_ical(), b"20120501T180000"
         )
-        self.assertEqual(
-            calendar.subcomponents[0]["DTSTART"].params["TZID"], "Asia/Tokyo"
-        )
+        self.assertEqual(calendar.subcomponents[0]["DTSTART"].params["TZID"], "JST")
 
         self.assertEqual(
             calendar.subcomponents[0]["DTEND"].to_ical(), b"20120501T200000"
         )
-        self.assertEqual(
-            calendar.subcomponents[0]["DTEND"].params["TZID"], "Asia/Tokyo"
-        )
+        self.assertEqual(calendar.subcomponents[0]["DTEND"].params["TZID"], "JST")
 
         self.assertEqual(
             calendar.subcomponents[1]["DTSTART"].to_ical(), b"20120506T180000"
         )
-        self.assertEqual(
-            calendar.subcomponents[1]["DTSTART"].params["TZID"], "US/Eastern"
-        )
+        self.assertEqual(calendar.subcomponents[1]["DTSTART"].params["TZID"], "EDT")
 
         self.assertEqual(
             calendar.subcomponents[1]["DTEND"].to_ical(), b"20120506T200000"
         )
-        self.assertEqual(
-            calendar.subcomponents[1]["DTEND"].params["TZID"], "US/Eastern"
-        )
+        self.assertEqual(calendar.subcomponents[1]["DTEND"].params["TZID"], "EDT")
 
     def test_file_name(self):
         request = RequestFactory().get("/test/ical")
@@ -443,10 +437,7 @@ class ICal20FeedTest(TestCase):
         view = TestFilenameFeed()
         response = view(request)
         self.assertIn("Content-Type", response)
-        self.assertEqual(
-            response["content-type"],
-            "text/calendar; charset=utf8",
-        )
+        self.assertEqual(response["content-type"], "text/calendar; charset=utf8")
 
     def test_file_header(self):
         request = RequestFactory().get("/test/ical")

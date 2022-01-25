@@ -4,6 +4,7 @@ import datetime
 
 from django.test import TestCase
 
+from dateutil import tz
 from dateutil.rrule import DAILY
 from dateutil.rrule import MO
 from dateutil.rrule import MONTHLY
@@ -13,7 +14,6 @@ from dateutil.rrule import WEEKLY
 from dateutil.rrule import YEARLY
 from dateutil.rrule import rrule
 from icalendar.prop import vRecur
-import pytz
 import recurrence
 
 from django_ical import utils
@@ -163,7 +163,7 @@ class BuildRruleTest(TestCase):
 
     def test_every_week_until_jan_2007(self):
         """Repeat every week until January 1, 2007."""
-        utc = pytz.UTC
+        utc = tz.UTC
         jan2007 = datetime.datetime(2007, 1, 1, 0, 0, tzinfo=utc)
         vrecurr = utils.build_rrule(freq="WEEKLY", until=jan2007)
         assert vrecurr["FREQ"] == "WEEKLY"
@@ -378,7 +378,7 @@ class FromTextTests(TestCase):
 
     def test_every_week_until_jan_2007(self):
         """Repeat every week until January 1, 2007."""
-        utc = pytz.UTC
+        utc = tz.UTC
         vrecurr = utils.build_rrule_from_text("FREQ=WEEKLY;UNTIL=20070101T000000Z")
         assert vrecurr["FREQ"] == ["WEEKLY"]
         assert vrecurr["UNTIL"] == [datetime.datetime(2007, 1, 1, 0, 0, tzinfo=utc)]
