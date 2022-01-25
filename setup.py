@@ -25,9 +25,7 @@ setup(
         "Framework :: Django",
         "Framework :: Django :: 2.2",
         "Framework :: Django :: 3.2",
-        # Recurrence dependency first has to be dropped
-        # due to it being incompatible with Django 4.0
-        # "Framework :: Django :: 4.0",
+        "Framework :: Django :: 4.0",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: MIT License",
@@ -42,7 +40,7 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    install_requires=["Django>=2.2", "icalendar>=4.0.3", "django-recurrence>=1.10.0"],
+    install_requires=["django>=2.2", "icalendar>=4.0.3", "django-recurrence>=1.11.1"],
     packages=find_packages(),
     test_suite="tests.main",
     use_scm_version=True,
