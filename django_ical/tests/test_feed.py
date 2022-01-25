@@ -358,10 +358,8 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(calendar["X-WR-TIMEZONE"], "Asia/Tokyo")
 
     def test_timezone(self):
-        tokyo = tz.gettz("Asia/Tokyo")  # also known as JST or Japan Standard Time
-        us_eastern = tz.gettz(
-            "US/Eastern"
-        )  # also known as EDT or Eastern (Daylight) Time
+        tokyo = tz.gettz("Asia/Tokyo")  # or JST or Japan Standard Time
+        us_eastern = tz.gettz("US/Eastern")  # or EDT or Eastern (Daylight) Time
 
         class TestTimezoneFeed(TestItemsFeed):
             def items(self):

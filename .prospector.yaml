@@ -3,7 +3,7 @@ ignore-paths:
 
 pep8:
   options:
-    max-line-length: 142
+    max-line-length: 88
 
 pylint:
   disable:
