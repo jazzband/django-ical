@@ -76,7 +76,7 @@ class ICal20Feed(SyndicationFeed):
     iCalendar 2.0 Feed implementation.
     """
 
-    mime_type = "text/calendar; charset=utf8"
+    mime_type = "text/calendar; charset=utf-8"
 
     def write(self, outfile, encoding):  # pylint: disable=unused-argument
         """
