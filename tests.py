@@ -9,21 +9,11 @@ def main():
     http://www.djangosnippets.org/snippets/1044/
     """
 
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "test_settings")
+    print(os.environ)
+
     import django
     from django.conf import settings
-
-    settings.configure(
-        DATABASES={
-            "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
-        },
-        INSTALLED_APPS=["django.contrib.contenttypes", "django_ical"],
-        MIDDLEWARE_CLASSES=[
-            "django.middleware.common.CommonMiddleware",
-            "django.contrib.sessions.middleware.SessionMiddleware",
-        ],
-        SECRET_KEY="snakeoil",
-        TIME_ZONE="UTC",
-    )
 
     django.setup()
 
