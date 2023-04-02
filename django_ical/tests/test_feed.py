@@ -435,7 +435,7 @@ class ICal20FeedTest(TestCase):
         view = TestFilenameFeed()
         response = view(request)
         self.assertIn("Content-Type", response)
-        self.assertEqual(response["content-type"], "text/calendar; charset=utf8")
+        self.assertEqual(response["content-type"], "text/calendar; charset=utf-8")
 
     def test_file_header(self):
         request = RequestFactory().get("/test/ical")
