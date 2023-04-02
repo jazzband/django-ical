@@ -3,6 +3,16 @@ Changes
 =======
 
 
+1.8.4 (2023-04-02)
+------------------
+
+- Fix content-type charset declarations.
+  [lchanouha]
+- Update test matrix.
+  Add Python 3.11 and Django 4.1 support.
+  Deprecate Python 3.7 support.
+  [aleksihakli]
+
 1.8.3 (2022-01-25)
 ------------------
 
