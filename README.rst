@@ -40,7 +40,7 @@ https://django-ical.readthedocs.io/en/latest/
    :target: https://github.com/jazzband/django-ical/actions
    :alt: GitHub Actions
 
-.. |coverage| image:: https://codecov.io/gh/jazzband/django-ical/branch/master/graph/badge.svg
+.. |coverage| image:: https://codecov.io/gh/jazzband/django-ical/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/jazzband/django-ical
    :alt: Coverage
 
