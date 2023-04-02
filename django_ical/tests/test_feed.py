@@ -29,6 +29,7 @@ class TestItemsFeed(ICalFeed):
     def items(self):
         return [
             {
+                "component_type": "event",
                 "title": "Title1",
                 "description": "Description1",
                 "link": "/event/1",
@@ -73,6 +74,7 @@ class TestItemsFeed(ICalFeed):
                 "modified": datetime(2012, 5, 2, 10, 0),
             },
             {
+                "component_type": "event",
                 "title": "Title2",
                 "description": "Description2",
                 "link": "/event/2",
@@ -108,7 +110,30 @@ class TestItemsFeed(ICalFeed):
                     },
                 ],
             },
+            {
+                "component_type": "todo",
+                "title": "Submit Revised Internet-Draft",
+                "description": "an important test",
+                "link": "/event/3",
+                "start": datetime(2007, 5, 14, 0),
+                "due": datetime(2007, 5, 16, 0),
+                "completed": datetime(2007, 3, 20),
+                "priority": 1,
+                "status": "NEEDS-ACTION",
+                "organizer": {
+                    "cn": "Bossy Martin",
+                    "email": "bossy.martin@example.com",
+                    "role": "CHAIR"
+                },
+                "modified": datetime(2012, 5, 2, 10, 0),
+                "geolocation": (37.386013, 2.238985),
+                "categories": ['CLEANING'],
+                "percent_complete": 89,
+            },
         ]
+
+    def item_component_type(self, obj):
+        return obj.get("component_type", None)
 
     def item_title(self, obj):
         return obj["title"]
@@ -120,19 +145,22 @@ class TestItemsFeed(ICalFeed):
         return obj["start"]
 
     def item_end_datetime(self, obj):
-        return obj["end"]
+        return obj.get("end", None)
+
+    def item_due_datetime(self, obj):
+        return obj.get("due", None)
 
     def item_rrule(self, obj):
-        return obj["recurrences"]["rrules"]
+        return obj.get("recurrences", {}).get("rrules", None)
 
     def item_exrule(self, obj):
-        return obj["recurrences"]["xrules"]
+        return obj.get("recurrences", {}).get("xrules", None)
 
     def item_rdate(self, obj):
-        return obj["recurrences"]["rdates"]
+        return obj.get("recurrences", {}).get("rdates", None)
 
     def item_exdate(self, obj):
-        return obj["recurrences"]["xdates"]
+        return obj.get("recurrences", {}).get("xdates", None)
 
     def item_link(self, obj):
         return obj["link"]
@@ -145,6 +173,21 @@ class TestItemsFeed(ICalFeed):
 
     def item_pubdate(self, obj):
         return obj.get("modified", None)
+
+    def item_completed(self, obj):
+        return obj.get("completed", None)
+
+    def item_percent_complete(self, obj):
+        return obj.get("percent_complete", None)
+
+    def item_priority(self, obj):
+        return obj.get("priority", None)
+
+    def item_due(self, obj):
+        return obj.get("due", None)
+
+    def item_categories(self, obj):
+        return obj.get("categories") or []
 
     def item_organizer(self, obj):
         organizer_dic = obj.get("organizer", None)
@@ -230,7 +273,7 @@ class ICal20FeedTest(TestCase):
         response = view(request)
 
         calendar = icalendar.Calendar.from_ical(response.content)
-        self.assertEqual(len(calendar.subcomponents), 2)
+        self.assertEqual(len(calendar.subcomponents), 3)
 
         self.assertEqual(calendar.subcomponents[0]["SUMMARY"], "Title1")
         self.assertEqual(calendar.subcomponents[0]["DESCRIPTION"], "Description1")
@@ -340,6 +383,34 @@ class ICal20FeedTest(TestCase):
         self.assertIn(
             b"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm2b\r\nTRIGGER:-P1D\r\nEND:VALARM\r\n",
             [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
+        )
+
+        self.assertEqual(calendar.subcomponents[2]["SUMMARY"], "Submit Revised Internet-Draft")
+        self.assertTrue(calendar.subcomponents[2]["URL"].endswith("/event/3"))
+        self.assertEqual(
+            calendar.subcomponents[2]["DTSTART"].to_ical(), b"20070514T000000"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["DUE"].to_ical(), b"20070516T000000"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["GEO"].to_ical(), "37.386013;2.238985"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["LAST-MODIFIED"].to_ical(), b"20120502T100000Z"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["ORGANIZER"].to_ical(),
+            b"MAILTO:bossy.martin@example.com",
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["PRIORITY"].to_ical(), b"1"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["CATEGORIES"][0].to_ical(), b"CLEANING"
+        )
+        self.assertEqual(
+            calendar.subcomponents[2]["PERCENT-COMPLETE"].to_ical(), b"89"
         )
 
     def test_wr_timezone(self):

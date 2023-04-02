@@ -160,6 +160,46 @@ Alarms must be `icalendar.Alarm` objects, a list is expected as the return value
         return [valarm]
 
 
+Tasks (Todos)
+-------------
+
+It is also possible to generate representations of tasks (or deadlines, todos)
+which are represented in iCal with the dedicated `VTODO` component instead of the usual `VEVENT`.
+
+To do so, you can use a specific method to determine which type of component a given item
+should be translated as:
+
+.. code-block:: python
+
+    from django_ical.views import ICalFeed
+    from examplecom.models import Deadline
+
+    class EventFeed(ICalFeed):
+        """
+        A simple event calender with tasks
+        """
+        product_id = '-//example.com//Example//EN'
+        timezone = 'UTC'
+        file_name = "event.ics"
+
+        def items(self):
+            return Deadline.objects.all().order_by('-due_datetime')
+
+        def item_component_type(self):
+            return 'todo' # could also be 'event', which is the default
+
+        def item_title(self, item):
+            return item.title
+
+        def item_description(self, item):
+            return item.description
+
+        def item_due_datetime(self, item):
+            return item.due_datetime
+
+
+
+
 Property Reference and Extensions
 ---------------------------------
 
@@ -263,6 +303,23 @@ Here is a table of all of the fields that django-ical supports.
 | item_status           | `STATUS`_             | The status of an event.     |
 |                       |                       | Can be CONFIRMED, CANCELLED |
 |                       |                       | or TENTATIVE.               |
++-----------------------+-----------------------+-----------------------------+
+| item_completed        | `COMPLETED`_          | The date a task was         |
+|                       |                       | completed.                  |
++-----------------------+-----------------------+-----------------------------+
+| item_percent_complete | `PERCENT-COMPLETE`_   | A number from 0 to 100      |
+|                       |                       | indication the completion   |
+|                       |                       | of the task.                |
++-----------------------+-----------------------+-----------------------------+
+| item_priority         | `PRIORITY`_           | An integer from 0 to 9.     |
+|                       |                       | 0 means undefined.          |
+|                       |                       | 1 means highest priority.   |
++-----------------------+-----------------------+-----------------------------+
+| item_due              | `DUE`      _          | The date a task is due.     |
++-----------------------+-----------------------+-----------------------------+
+| item_categories       | `CATEGORIES`_         | A list of strings, each     |
+|                       |                       | being a category of the     |
+|                       |                       | task.                       |
 +-----------------------+-----------------------+-----------------------------+
 
 
