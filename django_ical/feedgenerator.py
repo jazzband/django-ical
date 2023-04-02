@@ -27,7 +27,7 @@ For definitions of the iCalendar format see:
 http://www.ietf.org/rfc/rfc2445.txt
 """
 
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Todo
 
 from django.utils.feedgenerator import SyndicationFeed
 
@@ -45,7 +45,7 @@ FEED_FIELD_MAP = (
     ),  # See format here: http://www.rfc-editor.org/rfc/rfc2445.txt (sec 4.3.6)
 )
 
-ITEM_EVENT_FIELD_MAP = (
+ITEM_ELEMENT_FIELD_MAP = (
     # 'item_guid' becomes 'unique_id' when passed to the SyndicationFeed
     ("unique_id", "uid"),
     ("title", "summary"),
@@ -68,8 +68,14 @@ ITEM_EVENT_FIELD_MAP = (
     ("status", "status"),
     ("attendee", "attendee"),
     ("valarm", None),
+    # additional properties supported by the Todo class (VTODO calendar component).
+    # see https://icalendar.readthedocs.io/en/latest/_modules/icalendar/cal.html#Todo
+    ("completed", "completed"),
+    ("percent_complete", "percent-complete"),
+    ("priority", "priority"),
+    ("due", "due"),
+    ("categories", "categories"),
 )
-
 
 class ICal20Feed(SyndicationFeed):
     """
@@ -101,22 +107,26 @@ class ICal20Feed(SyndicationFeed):
 
     def write_items(self, calendar):
         """
-        Write all events to the calendar
+        Write all elements to the calendar
         """
         for item in self.items:
-            event = Event()
-            for ifield, efield in ITEM_EVENT_FIELD_MAP:
+            component_type = item.get("component_type")
+            if component_type == "todo":
+                element = Todo()
+            else:
+                element = Event()
+            for ifield, efield in ITEM_ELEMENT_FIELD_MAP:
                 val = item.get(ifield)
                 if val is not None:
                     if ifield == "attendee":
                         for list_item in val:
-                            event.add(efield, list_item)
+                            element.add(efield, list_item)
                     elif ifield == "valarm":
                         for list_item in val:
-                            event.add_component(list_item)
+                            element.add_component(list_item)
                     else:
-                        event.add(efield, val)
-            calendar.add_component(event)
+                        element.add(efield, val)
+            calendar.add_component(element)
 
 
 DefaultFeed = ICal20Feed
