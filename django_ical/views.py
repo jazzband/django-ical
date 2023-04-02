@@ -78,8 +78,8 @@ class ICalFeed(Feed):
         """
         try:
             obj = self.get_object(request, *args, **kwargs)
-        except ObjectDoesNotExist:
-            raise Http404("Feed object does not exist.")
+        except ObjectDoesNotExist as exc:
+            raise Http404("Feed object does not exist.") from exc
 
         feedgen = self.get_feed(obj, request)
         response = HttpResponse(content_type=feedgen.mime_type)
