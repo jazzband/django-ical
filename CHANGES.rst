@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.9.0 (2023-04-04)
+------------------
+
+- Support for iCalendar VTODO elements
+  [wetneb]
+
+
 1.8.4 (2023-04-02)
 ------------------
 
@@ -12,6 +19,7 @@ Changes
   Add Python 3.11 and Django 4.1 support.
   Deprecate Python 3.7 support.
   [aleksihakli]
+
 
 1.8.3 (2022-01-25)
 ------------------
