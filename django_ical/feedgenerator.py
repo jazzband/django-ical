@@ -15,11 +15,11 @@ Sample usage:
 >>> feed.add_item(
 ...     title="Hello",
 ...     link="http://www.example.com/test/",
-...     description="Testing."
+...     description="Testing.",
 ...     start_datetime=datetime(2012, 5, 6, 10, 00),
 ...     end_datetime=datetime(2012, 5, 6, 12, 00),
 ... )
->>> fp = open('test.ical', 'w')
+>>> fp = open('test.ical', 'wb')
 >>> feed.write(fp, 'utf-8')
 >>> fp.close()
 
