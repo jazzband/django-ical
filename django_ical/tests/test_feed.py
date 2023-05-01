@@ -97,6 +97,7 @@ class TestItemsFeed(ICalFeed):
                     "email": "john.doe@example.com",
                     "role": "CHAIR",
                 },
+                "categories": ['Cat1', 'Cat2'],
                 "alarms": [
                     {
                         "trigger": timedelta(minutes=-30),
@@ -376,6 +377,9 @@ class ICal20FeedTest(TestCase):
             calendar.subcomponents[1]["ORGANIZER"].to_ical(),
             b"MAILTO:john.doe@example.com",
         )
+        self.assertEqual(
+            calendar.subcomponents[1]["CATEGORIES"].to_ical(), b"Cat1,Cat2"
+        )
         self.assertIn(
             b"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm2a\r\nTRIGGER:-PT30M\r\nEND:VALARM\r\n",
             [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
@@ -407,7 +411,7 @@ class ICal20FeedTest(TestCase):
             calendar.subcomponents[2]["PRIORITY"].to_ical(), b"1"
         )
         self.assertEqual(
-            calendar.subcomponents[2]["CATEGORIES"][0].to_ical(), b"CLEANING"
+            calendar.subcomponents[2]["CATEGORIES"].to_ical(), b"CLEANING"
         )
         self.assertEqual(
             calendar.subcomponents[2]["PERCENT-COMPLETE"].to_ical(), b"89"
