@@ -74,7 +74,6 @@ ITEM_ELEMENT_FIELD_MAP = (
     ("percent_complete", "percent-complete"),
     ("priority", "priority"),
     ("due", "due"),
-    ("categories", "categories"),
 )
 
 class ICal20Feed(SyndicationFeed):
