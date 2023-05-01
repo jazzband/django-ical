@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.9.1 (2023-05-01)
+------------------
+
+- Fix multiple CATEGORIES and add tests
+  [mjfinney]
+
+
 1.9.0 (2023-04-04)
 ------------------
 
