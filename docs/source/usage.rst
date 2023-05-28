@@ -315,7 +315,7 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | 0 means undefined.          |
 |                       |                       | 1 means highest priority.   |
 +-----------------------+-----------------------+-----------------------------+
-| item_due              | `DUE`      _          | The date a task is due.     |
+| item_due              | `DUE`_                | The date a task is due.     |
 +-----------------------+-----------------------+-----------------------------+
 | item_categories       | `CATEGORIES`_         | A list of strings, each     |
 |                       |                       | being a category of the     |
