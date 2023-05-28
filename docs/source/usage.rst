@@ -321,6 +321,52 @@ Here is a table of all of the fields that django-ical supports.
 |                       |                       | being a category of the     |
 |                       |                       | task.                       |
 +-----------------------+-----------------------+-----------------------------+
+| calscale              | `CALSCALE`_           | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| method                | `METHOD`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| prodid                | `PRODID`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| version               | `VERSION`_            | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| attach                | `ATTACH`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| class                 | `CLASS`_              | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| comment               | `COMMENT`_            | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| resources             | `RESOURCES`_          | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| duration              | `DURATION`_           | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| freebusy              | `FREEBUSY`_           | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| tzid                  | `TZID`_               | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| tzname                | `TZNAME`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| tzoffsetfrom          | `TZOFFSETFROM`_       | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| tzoffsetto            | `TZOFFSETTO`_         | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| tzurl                 | `TZURL`_              | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| contact               | `CONTACT`_            | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| recurrence_id         | `RECURRENCE_ID`_      | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| related_to            | `RELATED_TO`_         | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| action                | `ACTION`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| repeat                | `REPEAT`_             | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| trigger               | `TRIGGER`_            | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| sequence              | `SEQUENCE`_           | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
+| request_status        | `REQUEST_STATUS`_     | Not yet documented.         |
++-----------------------+-----------------------+-----------------------------+
 
 
 .. note::
@@ -362,6 +408,29 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _EXDATE: https://www.kanzaki.com/docs/ical/exdate.html
 .. _STATUS: https://www.kanzaki.com/docs/ical/status.html
 .. _VALARM: https://www.kanzaki.com/docs/ical/valarm.html
+.. _CALSCALE: https://www.kanzaki.com/docs/ical/calscale.html
+.. _METHOD: https://www.kanzaki.com/docs/ical/method.html
+.. _PRODID: https://www.kanzaki.com/docs/ical/prodid.html
+.. _VERSION: https://www.kanzaki.com/docs/ical/version.html
+.. _ATTACH: https://www.kanzaki.com/docs/ical/attach.html
+.. _CLASS: https://www.kanzaki.com/docs/ical/class.html
+.. _COMMENT: https://www.kanzaki.com/docs/ical/comment.html
+.. _RESOURCES: https://www.kanzaki.com/docs/ical/resources.html
+.. _DURATION: https://www.kanzaki.com/docs/ical/duration.html
+.. _FREEBUSY: https://www.kanzaki.com/docs/ical/freebusy.html
+.. _TZID: https://www.kanzaki.com/docs/ical/tzid.html
+.. _TZNAME: https://www.kanzaki.com/docs/ical/tzname.html
+.. _TZOFFSETFROM: https://www.kanzaki.com/docs/ical/tzoffsetfrom.html
+.. _TZOFFSETTO: https://www.kanzaki.com/docs/ical/tzoffsetto.html
+.. _TZURL: https://www.kanzaki.com/docs/ical/tzurl.html
+.. _CONTACT: https://www.kanzaki.com/docs/ical/contact.html
+.. _RECURRENCE-ID: https://www.kanzaki.com/docs/ical/recurrenceId.html
+.. _RELATED-TO: https://www.kanzaki.com/docs/ical/relatedTo.html
+.. _ACTION: https://www.kanzaki.com/docs/ical/action.html
+.. _REPEAT: https://www.kanzaki.com/docs/ical/repeat.html
+.. _TRIGGER: https://www.kanzaki.com/docs/ical/trigger.html
+.. _SEQUENCE: https://www.kanzaki.com/docs/ical/sequence.html
+.. _REQUEST-STATUS: https://icalendar.org/iCalendar-RFC-5545/3-8-8-3-request-status.html
 .. _X-WR-CALNAME: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-CALDESC: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
 .. _X-WR-TIMEZONE: http://en.wikipedia.org/wiki/ICalendar#Calendar_extensions
