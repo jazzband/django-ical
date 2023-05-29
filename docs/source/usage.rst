@@ -408,6 +408,10 @@ See: `The syndication feed framework: Specifying the type of feed <https://docs.
 .. _EXDATE: https://www.kanzaki.com/docs/ical/exdate.html
 .. _STATUS: https://www.kanzaki.com/docs/ical/status.html
 .. _VALARM: https://www.kanzaki.com/docs/ical/valarm.html
+.. _COMPLETED: https://www.kanzaki.com/docs/ical/completed.html
+.. _PERCENT-COMPLETE: https://www.kanzaki.com/docs/ical/percentComplete.html
+.. _PRIORITY: https://www.kanzaki.com/docs/ical/priority.html
+.. _DUE: https://www.kanzaki.com/docs/ical/due.html
 .. _CALSCALE: https://www.kanzaki.com/docs/ical/calscale.html
 .. _METHOD: https://www.kanzaki.com/docs/ical/method.html
 .. _PRODID: https://www.kanzaki.com/docs/ical/prodid.html
