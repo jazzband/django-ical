@@ -3,6 +3,13 @@ Changes
 =======
 
 
+1.9.2 (2023-06-12)
+------------------
+
+- Support all properties specified in RFC 5545
+  [magicbrothers]
+
+
 1.9.1 (2023-05-01)
 ------------------
 
