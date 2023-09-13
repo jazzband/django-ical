@@ -8,7 +8,7 @@ The high level iCal feed-generating is supplied by the
 :class:`ICalFeed <django_ical.views.ICalFeed>` class.
 To create a feed, write a :class:`ICalFeed <django_ical.views.ICalFeed>`
 class and point to an instance of it in your
-`URLconf <https://docs.djangoproject.com/en/1.9/topics/http/urls/>`_.
+`URLconf <https://docs.djangoproject.com/en/4.2/topics/http/urls/>`_.
 
 With RSS feeds, the items in the feed represent articles or simple web pages.
 The :class:`ICalFeed <django_ical.views.ICalFeed>` class represents an
