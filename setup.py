@@ -38,7 +38,6 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     install_requires=["django>=3.2", "icalendar>=4.0.3", "django-recurrence>=1.11.1"],
