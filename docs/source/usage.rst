@@ -53,11 +53,11 @@ your URLconf. For example:
     from django.conf.urls import patterns, url, include
     from myproject.feeds import EventFeed
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         # ...
-        (r'^latest/feed.ics$', EventFeed()),
+        path('latest/feed.ics', EventFeed()),
         # ...
-    )
+    ]
 
 Example how recurrences are built using the django-recurrence_ package:
 
