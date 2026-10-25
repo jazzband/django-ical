@@ -14,7 +14,7 @@
 import sys
 import os
 
-from pkg_resources import get_distribution
+from importlib.metadata import version as distribution_version
 
 # So that we can import django for the API reference.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django.conf.global_settings")
@@ -57,7 +57,7 @@ copyright = "2012, Ian Lewis"
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = get_distribution("django_ical").version
+release = distribution_version("django-ical")
 # The short X.Y version.
 version = ".".join(release.split(".")[:2])
 
