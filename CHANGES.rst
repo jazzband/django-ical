@@ -3,6 +3,14 @@ Changes
 =======
 
 
+Unreleased
+----------
+
+- Require Python 3.11 or newer and Django 4.1.3 or newer.
+- Run tests through Django directly, correct the QA and Django development
+  environments, and preserve each environment's selected Django version.
+
+
 1.9.2 (2023-06-12)
 ------------------
 
