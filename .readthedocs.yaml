@@ -4,6 +4,15 @@ build:
   os: ubuntu-24.04
   tools:
     python: "3.11"
+  jobs:
+    post_checkout:
+      - |
+        if [ "$(git rev-parse --is-shallow-repository)" = "true" ]
+        then
+          git fetch --unshallow --tags origin
+        else
+          git fetch --tags origin
+        fi
 
 sphinx:
   configuration: docs/source/conf.py
