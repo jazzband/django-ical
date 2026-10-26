@@ -22,7 +22,7 @@ FEED_EXTRA_FIELDS = ("method", "product_id", "timezone")
 # Extra fields added to items (events) to
 # support ical
 ICAL_EXTRA_FIELDS = [
-    "component_type", # type of calendar component (event, todo)
+    "component_type",  # type of calendar component (event, todo)
     "timestamp",  # dtstamp
     "created",  # created
     "start_datetime",  # dtstart
@@ -39,10 +39,10 @@ ICAL_EXTRA_FIELDS = [
     "attendee",  # list of attendees
     "valarm",  # list of icalendar.Alarm objects,
     # additional fields for tasks
-    "completed", # completed
-    "percent_complete", # percent-complete
-    "priority", # priority
-    "due", # due
+    "completed",  # completed
+    "percent_complete",  # percent-complete
+    "priority",  # priority
+    "due",  # due
 ]
 
 

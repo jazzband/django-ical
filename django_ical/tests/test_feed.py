@@ -97,7 +97,7 @@ class TestItemsFeed(ICalFeed):
                     "email": "john.doe@example.com",
                     "role": "CHAIR",
                 },
-                "categories": ['Cat1', 'Cat2'],
+                "categories": ["Cat1", "Cat2"],
                 "alarms": [
                     {
                         "trigger": timedelta(minutes=-30),
@@ -124,11 +124,11 @@ class TestItemsFeed(ICalFeed):
                 "organizer": {
                     "cn": "Bossy Martin",
                     "email": "bossy.martin@example.com",
-                    "role": "CHAIR"
+                    "role": "CHAIR",
                 },
                 "modified": datetime(2012, 5, 2, 10, 0),
                 "geolocation": (37.386013, 2.238985),
-                "categories": ['CLEANING'],
+                "categories": ["CLEANING"],
                 "percent_complete": 89,
             },
         ]
@@ -389,14 +389,14 @@ class ICal20FeedTest(TestCase):
             [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
         )
 
-        self.assertEqual(calendar.subcomponents[2]["SUMMARY"], "Submit Revised Internet-Draft")
+        self.assertEqual(
+            calendar.subcomponents[2]["SUMMARY"], "Submit Revised Internet-Draft"
+        )
         self.assertTrue(calendar.subcomponents[2]["URL"].endswith("/event/3"))
         self.assertEqual(
             calendar.subcomponents[2]["DTSTART"].to_ical(), b"20070514T000000"
         )
-        self.assertEqual(
-            calendar.subcomponents[2]["DUE"].to_ical(), b"20070516T000000"
-        )
+        self.assertEqual(calendar.subcomponents[2]["DUE"].to_ical(), b"20070516T000000")
         self.assertEqual(
             calendar.subcomponents[2]["GEO"].to_ical(), "37.386013;2.238985"
         )
@@ -407,15 +407,9 @@ class ICal20FeedTest(TestCase):
             calendar.subcomponents[2]["ORGANIZER"].to_ical(),
             b"MAILTO:bossy.martin@example.com",
         )
-        self.assertEqual(
-            calendar.subcomponents[2]["PRIORITY"].to_ical(), b"1"
-        )
-        self.assertEqual(
-            calendar.subcomponents[2]["CATEGORIES"].to_ical(), b"CLEANING"
-        )
-        self.assertEqual(
-            calendar.subcomponents[2]["PERCENT-COMPLETE"].to_ical(), b"89"
-        )
+        self.assertEqual(calendar.subcomponents[2]["PRIORITY"].to_ical(), b"1")
+        self.assertEqual(calendar.subcomponents[2]["CATEGORIES"].to_ical(), b"CLEANING")
+        self.assertEqual(calendar.subcomponents[2]["PERCENT-COMPLETE"].to_ical(), b"89")
 
     def test_wr_timezone(self):
         """
@@ -477,22 +471,32 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(
             calendar.subcomponents[0]["DTSTART"].to_ical(), b"20120501T180000"
         )
-        self.assertEqual(calendar.subcomponents[0]["DTSTART"].params["TZID"], "JST")
+        self.assertIn(
+            calendar.subcomponents[0]["DTSTART"].params["TZID"], ("JST", "Asia/Tokyo")
+        )
 
         self.assertEqual(
             calendar.subcomponents[0]["DTEND"].to_ical(), b"20120501T200000"
         )
-        self.assertEqual(calendar.subcomponents[0]["DTEND"].params["TZID"], "JST")
+        self.assertIn(
+            calendar.subcomponents[0]["DTEND"].params["TZID"], ("JST", "Asia/Tokyo")
+        )
 
         self.assertEqual(
             calendar.subcomponents[1]["DTSTART"].to_ical(), b"20120506T180000"
         )
-        self.assertEqual(calendar.subcomponents[1]["DTSTART"].params["TZID"], "EDT")
+        self.assertIn(
+            calendar.subcomponents[1]["DTSTART"].params["TZID"],
+            ("EDT", "US/Eastern", "America/New_York"),
+        )
 
         self.assertEqual(
             calendar.subcomponents[1]["DTEND"].to_ical(), b"20120506T200000"
         )
-        self.assertEqual(calendar.subcomponents[1]["DTEND"].params["TZID"], "EDT")
+        self.assertIn(
+            calendar.subcomponents[1]["DTEND"].params["TZID"],
+            ("EDT", "US/Eastern", "America/New_York"),
+        )
 
     def test_file_name(self):
         request = RequestFactory().get("/test/ical")

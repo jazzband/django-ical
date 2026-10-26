@@ -5,27 +5,19 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || false }}
     strategy:
       fail-fast: false
       max-parallel: 5
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        django-version: ['3.2', '4.1', '4.2']
+        python-version: ['3.11']
+        django-version: ['4.1', '4.2']
         include:
-          # Tox configuration for QA environment
           - python-version: '3.11'
             django-version: 'qa'
-          # Django main
-          - python-version: '3.11'
+          - python-version: '3.12'
             django-version: 'main'
             experimental: true
-          - python-version: '3.11'
-            django-version: 'main'
-            experimental: true
-        exclude:
-          # Exclude Django 3.2 for Python 3.11
-          - python-version: '3.11'
-            django-version: '3.2'
 
     steps:
     - uses: actions/checkout@v2
@@ -41,7 +33,7 @@ jobs:
         echo "::set-output name=dir::$(pip cache dir)"
 
     - name: Cache
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
         key:

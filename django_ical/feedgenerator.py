@@ -99,6 +99,7 @@ ITEM_ELEMENT_FIELD_MAP = (
     ("request_status", "request-status"),
 )
 
+
 class ICal20Feed(SyndicationFeed):
     """
     iCalendar 2.0 Feed implementation.
