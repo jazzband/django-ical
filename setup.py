@@ -13,9 +13,6 @@ setup(
     ),
     keywords="ical calendar django syndication feed",
     author="Ian Lewis",
-    author_email="security@django-commons.org",
-    maintainer="Django Commons",
-    maintainer_email="security@django-commons.org",
     license="MIT License",
     url="https://github.com/django-commons/django-ical",
     classifiers=[
