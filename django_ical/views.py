@@ -38,6 +38,7 @@ ICAL_EXTRA_FIELDS = [
     "status",  # CONFIRMED|TENTATIVE|CANCELLED
     "attendee",  # list of attendees
     "valarm",  # list of icalendar.Alarm objects,
+    "attach",  # url/uri or list of urls/tuples
     # additional fields for tasks
     "completed",  # completed
     "percent_complete",  # percent-complete
@@ -72,6 +73,7 @@ class ICalFeed(Feed):
     :item_transparency: TRANSP
     :item_attendee: ATTENDEE
     :item_valarm: VALARM
+    :item_attach: ATTACH
     """
 
     feed_type = feedgenerator.DefaultFeed
