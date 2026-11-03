@@ -147,6 +147,17 @@ class ICal20Feed(SyndicationFeed):
                     elif ifield == "valarm":
                         for list_item in val:
                             element.add_component(list_item)
+                    elif ifield == "attach":
+                        if isinstance(val, tuple) and len(val) == 2 and isinstance(val[1], dict):
+                            element.add(efield, val[0], parameters=val[1])
+                        elif isinstance(val, (list, tuple)):
+                            for list_item in val:
+                                if isinstance(list_item, tuple) and len(list_item) == 2 and isinstance(list_item[1], dict):
+                                    element.add(efield, list_item[0], parameters=list_item[1])
+                                else:
+                                    element.add(efield, list_item)
+                        else:
+                            element.add(efield, val)
                     else:
                         element.add(efield, val)
             calendar.add_component(element)

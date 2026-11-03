@@ -72,6 +72,7 @@ class TestItemsFeed(ICalFeed):
                     },
                 ],
                 "modified": datetime(2012, 5, 2, 10, 0),
+                "attach": "https://example.com/document.pdf",
             },
             {
                 "component_type": "event",
@@ -109,6 +110,9 @@ class TestItemsFeed(ICalFeed):
                         "action": "DISPLAY",
                         "description": "Alarm2b",
                     },
+                ],
+                "attach": [
+                    ("https://example.com/attachment.pdf", {"FMTTYPE": "application/pdf"})
                 ],
             },
             {
@@ -238,6 +242,9 @@ class TestItemsFeed(ICalFeed):
                 alarm_list.append(valarm)
             return alarm_list
 
+    def item_attach(self, obj):
+        return obj.get("attach", None)
+
 
 class TestFilenameFeed(ICalFeed):
     feed_type = ICal20Feed
@@ -348,6 +355,10 @@ class ICal20FeedTest(TestCase):
         self.assertEqual(
             calendar.subcomponents[0]["EXDATE"].to_ical(), b"19990801,19980201"
         )
+        self.assertEqual(
+            calendar.subcomponents[0]["ATTACH"].to_ical(),
+            b"https://example.com/document.pdf",
+        )
 
         self.assertEqual(calendar.subcomponents[1]["SUMMARY"], "Title2")
         self.assertEqual(calendar.subcomponents[1]["DESCRIPTION"], "Description2")
@@ -387,6 +398,14 @@ class ICal20FeedTest(TestCase):
         self.assertIn(
             b"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Alarm2b\r\nTRIGGER:-P1D\r\nEND:VALARM\r\n",
             [comp.to_ical() for comp in calendar.subcomponents[1].subcomponents],
+        )
+        self.assertEqual(
+            calendar.subcomponents[1]["ATTACH"].to_ical(),
+            b"https://example.com/attachment.pdf",
+        )
+        self.assertEqual(
+            calendar.subcomponents[1]["ATTACH"].params["FMTTYPE"],
+            "application/pdf",
         )
 
         self.assertEqual(
