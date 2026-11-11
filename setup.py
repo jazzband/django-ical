@@ -13,11 +13,8 @@ setup(
     ),
     keywords="ical calendar django syndication feed",
     author="Ian Lewis",
-    author_email="security@jazzband.com",
-    maintainer="Jazzband",
-    maintainer_email="security@jazzband.com",
     license="MIT License",
-    url="https://github.com/jazzband/django-ical",
+    url="https://github.com/django-commons/django-ical",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",

@@ -1,7 +1,7 @@
 django-ical
 ===========
 
-|pypi| |docs| |build| |coverage| |jazzband|
+|pypi| |docs| |build| |coverage| |django-commons|
 
 django-ical is a simple library/framework for creating
 `iCal <http://www.ietf.org/rfc/rfc2445.txt>`_
@@ -36,14 +36,14 @@ https://django-ical.readthedocs.io/en/latest/
     :scale: 100%
     :target: http://django-ical.readthedocs.io/en/latest/?badge=latest
 
-.. |build| image:: https://github.com/jazzband/django-ical/workflows/Test/badge.svg
-   :target: https://github.com/jazzband/django-ical/actions
+.. |build| image:: https://github.com/django-commons/django-ical/workflows/Test/badge.svg
+   :target: https://github.com/django-commons/django-ical/actions
    :alt: GitHub Actions
 
-.. |coverage| image:: https://codecov.io/gh/jazzband/django-ical/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/jazzband/django-ical
+.. |coverage| image:: https://codecov.io/gh/django-commons/django-ical/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/django-commons/django-ical
    :alt: Coverage
 
-.. |jazzband| image:: https://jazzband.co/static/img/badge.svg
-   :target: https://jazzband.co/
-   :alt: Jazzband
+.. |django-commons| image:: https://img.shields.io/badge/Django%20Commons-organization-blue
+   :target: https://github.com/django-commons/
+   :alt: Django Commons
